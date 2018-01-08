@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="微信," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="最近和客户端做了很多需要分享到微信的H5，其中涉及到分享功能的配置，踩了几个坑，特此记录。 先整体说一下思路：微信公众平台中设置JS接口安全域名 ——&amp;gt;H5页面中引入微信js：http://res.wx.qq.com/open/js/jweixin-1.2.0.js) ——&amp;gt; 从服务器获取timestamp，nonceStr，signature ——&amp;gt; 在wx.ready中调用分">
+<meta name="keywords" content="微信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信分享配置以及相关参数获取方法">
+<meta property="og:url" content="http://yoursite.com/2017/12/25/微信分享配置以及相关参数获取方法/index.html">
+<meta property="og:site_name" content="my blog">
+<meta property="og:description" content="最近和客户端做了很多需要分享到微信的H5，其中涉及到分享功能的配置，踩了几个坑，特此记录。 先整体说一下思路：微信公众平台中设置JS接口安全域名 ——&amp;gt;H5页面中引入微信js：http://res.wx.qq.com/open/js/jweixin-1.2.0.js) ——&amp;gt; 从服务器获取timestamp，nonceStr，signature ——&amp;gt; 在wx.ready中调用分">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2017/12/25/微信分享配置以及相关参数获取方法/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/12/25/微信分享配置以及相关参数获取方法/2.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/12/25/微信分享配置以及相关参数获取方法/3.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/12/25/微信分享配置以及相关参数获取方法/4.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/12/25/微信分享配置以及相关参数获取方法/5.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/12/25/微信分享配置以及相关参数获取方法/6.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/12/25/微信分享配置以及相关参数获取方法/7.jpg">
+<meta property="og:updated_time" content="2017-12-28T02:25:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信分享配置以及相关参数获取方法">
+<meta name="twitter:description" content="最近和客户端做了很多需要分享到微信的H5，其中涉及到分享功能的配置，踩了几个坑，特此记录。 先整体说一下思路：微信公众平台中设置JS接口安全域名 ——&amp;gt;H5页面中引入微信js：http://res.wx.qq.com/open/js/jweixin-1.2.0.js) ——&amp;gt; 从服务器获取timestamp，nonceStr，signature ——&amp;gt; 在wx.ready中调用分">
+<meta name="twitter:image" content="http://yoursite.com/2017/12/25/微信分享配置以及相关参数获取方法/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/25/微信分享配置以及相关参数获取方法/"/>
+
+
+
+
+
+  <title>微信分享配置以及相关参数获取方法 | my blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">my blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/25/微信分享配置以及相关参数获取方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xuejian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="my blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微信分享配置以及相关参数获取方法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-25T18:19:01+08:00">
+                2017-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/微信/" itemprop="url" rel="index">
+                    <span itemprop="name">微信</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近和客户端做了很多需要分享到微信的H5，其中涉及到分享功能的配置，踩了几个坑，特此记录。</p>
+<h4 id="先整体说一下思路："><a href="#先整体说一下思路：" class="headerlink" title="先整体说一下思路："></a>先整体说一下思路：</h4><p>微信公众平台中设置JS接口安全域名 ——&gt;H5页面中引入微信js：<a href="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" target="_blank" rel="external">http://res.wx.qq.com/open/js/jweixin-1.2.0.js</a>) ——&gt; 从服务器获取timestamp，nonceStr，signature ——&gt; 在wx.ready中调用分享接口。  </p>
+<h3 id="要在服务端进行的："><a href="#要在服务端进行的：" class="headerlink" title="要在服务端进行的："></a>要在服务端进行的：</h3><h4 id="一、获取access-token"><a href="#一、获取access-token" class="headerlink" title="一、获取access_token"></a>一、获取access_token</h4><p>获取access_token的目的是用来获取jsapi_ticket，那么什么是jsapi_ticket？用官方的话说，jsapi_ticket是微信公众号用于调用js接口的临时票据，通俗点说就是要想调用微信的js接口，就要先获取jsapi_ticket，<span style="color:red">在获取access_token前要注意一点：一定要先到公众平台设置ip白名单，否则在获取token时会提示：”invalid ip xxx.xxx.xxx.xxx, not in whitelist hint: [yaulkA0408b705]”</span>，设置完白名单后就可以安心的用下面的方法获取token了：  </p>
+<p>获取access_token方法如下：通过get方法请求此地址：<br><a href="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=APPID&amp;secret=SECRET" target="_blank" rel="external">https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=APPID&amp;secret=SECRET</a><br>解释下参数：grant_type就写死“client_credential”即可，appid为公众号的appi，secret为公众号的secret，这两个都可以在微信公众平台获取。<br>注意：access_token的有效期为2个小时，需要定时进行刷新。<br>正确请求的情况下会返回access_token和expires_in（过期时间）。</p>
+<h4 id="二、获取jsapi-ticket"><a href="#二、获取jsapi-ticket" class="headerlink" title="二、获取jsapi_ticket"></a>二、获取jsapi_ticket</h4><p>用第一步拿到的access_token，用get方法请求：<br><a href="https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&amp;type=jsapi" target="_blank" rel="external">https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&amp;type=jsapi</a><br>成功返回如下：(借用下官方的图)<br><img src="/2017/12/25/微信分享配置以及相关参数获取方法/1.jpg" alt="成功返回信息"><br><span style="color:red">此处注意：jsapi_ticket和token一样有效期都为7200秒，而且每天获取token和jsapi_ticket的次数有限，所以必须要在服务端缓存jsapi_ticket和access_token，每7200秒的时候才获取一次。</span></p>
+<h4 id="三、生成签名"><a href="#三、生成签名" class="headerlink" title="三、生成签名"></a>三、生成签名</h4><p>需要参与签名的参数如下：<br>1.noncestr（随机字符串）<br>2.步骤二中获取到的jsapi_ticket<br>3.timestamp（时间戳）<br>4.当前网页的URL，不包括#及其后面部分，可通过location.href.split(‘#’)[0]获取  </p>
+<p>对以上所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&amp;key2=value2…）拼接成字符串string1。这里需要注意的是所有参数名均为小写字符。对string1作sha1加密，字段名和字段值都采用原始值，不进行URL 转义。即signature=sha1(string1)。<br>示例：（再借用一下官方的图）<br> <img src="/2017/12/25/微信分享配置以及相关参数获取方法/2.jpg" alt="string1"><br>然后对string1进行sha1签名，即可得到signature。如下（还是借用官方的图）<br> <img src="/2017/12/25/微信分享配置以及相关参数获取方法/3.jpg" alt="sha1签名">  </p>
+<p><span style="color:red">此处注意了，有一个小坑，签名的URL必须和调用JS接口的url一致，比较保险的方法是前端直接获取页面的url然后传给后端进行签名，这样即使url中有动态的参数也不会出现签名的url和页面的url不一致而导致签名失败的情况。</span>  </p>
+<h4 id="好了，到此为止前三步都是在服务端进行的，下面开始则是前端页面的配置。"><a href="#好了，到此为止前三步都是在服务端进行的，下面开始则是前端页面的配置。" class="headerlink" title="好了，到此为止前三步都是在服务端进行的，下面开始则是前端页面的配置。"></a>好了，到此为止前三步都是在服务端进行的，下面开始则是前端页面的配置。</h4><h3 id="要在前端页面中进行的："><a href="#要在前端页面中进行的：" class="headerlink" title="要在前端页面中进行的："></a>要在前端页面中进行的：</h3><h4 id="一、在公众平台中设置安全域名"><a href="#一、在公众平台中设置安全域名" class="headerlink" title="一、在公众平台中设置安全域名"></a>一、在公众平台中设置安全域名</h4><p>安全域名的设置要注意一下，只写域名就好，不用写http，记得要把微信提供的txt文件放在域名的根目录下，要保证域名可以访问到这个txt文件，可以在浏览器里输入域名+txt文件的名字来测试txt位置是否放置正确。<br>修改安全域名的时候一定要先确定好是否正确，因为每个月域名只能修改<span style="color:red">3</span>次。<br> <img src="/2017/12/25/微信分享配置以及相关参数获取方法/4.jpg" alt="安全域名">  </p>
+<h4 id="二、引入js文件"><a href="#二、引入js文件" class="headerlink" title="二、引入js文件"></a>二、引入js文件</h4><p>这就不用多说了，在页面中直接引用：<br><a href="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" target="_blank" rel="external">http://res.wx.qq.com/open/js/jweixin-1.2.0.js</a></p>
+<h4 id="三、通过config接口注入权限验证配置"><a href="#三、通过config接口注入权限验证配置" class="headerlink" title="三、通过config接口注入权限验证配置"></a>三、通过config接口注入权限验证配置</h4><p>（依旧还是官方图）<br> <img src="/2017/12/25/微信分享配置以及相关参数获取方法/5.jpg" alt="配置config">  </p>
+<h4 id="四、通过ready处理验证成功的事件"><a href="#四、通过ready处理验证成功的事件" class="headerlink" title="四、通过ready处理验证成功的事件"></a>四、通过ready处理验证成功的事件</h4><p><span style="color:red">这里注意一下，如果需要页面一加载就调用相关的接口，则要把相关的接口放在ready方法中，如果需要用户触发时候调用，则不用放在ready中。 </span><br>（老规矩官方图）<br> <img src="/2017/12/25/微信分享配置以及相关参数获取方法/6.jpg" alt="配置config">  </p>
+<h4 id="五、通过error处理失败的验证"><a href="#五、通过error处理失败的验证" class="headerlink" title="五、通过error处理失败的验证"></a>五、通过error处理失败的验证</h4><p>失败处理这个就没啥说的了，直接上官方图：<br> <img src="/2017/12/25/微信分享配置以及相关参数获取方法/7.jpg" alt="配置config">  </p>
+<h4 id="最后呢，总结一下，微信的分享的相关的配置多数还是在服务端完成，注意一下签名的url要和页面的url一致，安全域名填写正确，access-token和jsapi-ticket都在服务端缓存好。好了，微信分享的配置就说到这里了。"><a href="#最后呢，总结一下，微信的分享的相关的配置多数还是在服务端完成，注意一下签名的url要和页面的url一致，安全域名填写正确，access-token和jsapi-ticket都在服务端缓存好。好了，微信分享的配置就说到这里了。" class="headerlink" title="最后呢，总结一下，微信的分享的相关的配置多数还是在服务端完成，注意一下签名的url要和页面的url一致，安全域名填写正确，access_token和jsapi_ticket都在服务端缓存好。好了，微信分享的配置就说到这里了。"></a>最后呢，总结一下，微信的分享的相关的配置多数还是在服务端完成，注意一下签名的url要和页面的url一致，安全域名填写正确，access_token和jsapi_ticket都在服务端缓存好。好了，微信分享的配置就说到这里了。</h4>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/微信/" rel="tag"># 微信</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/11/微信用户授权（获取用户信息）踩坑与总结/" rel="next" title="微信用户授权（获取用户信息）踩坑与总结">
+                <i class="fa fa-chevron-left"></i> 微信用户授权（获取用户信息）踩坑与总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/avatar.jpg"
+              alt="xuejian" />
+          
+            <p class="site-author-name" itemprop="name">xuejian</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#先整体说一下思路："><span class="nav-number">1.</span> <span class="nav-text">先整体说一下思路：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#要在服务端进行的："><span class="nav-number"></span> <span class="nav-text">要在服务端进行的：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、获取access-token"><span class="nav-number">1.</span> <span class="nav-text">一、获取access_token</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、获取jsapi-ticket"><span class="nav-number">2.</span> <span class="nav-text">二、获取jsapi_ticket</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、生成签名"><span class="nav-number">3.</span> <span class="nav-text">三、生成签名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#好了，到此为止前三步都是在服务端进行的，下面开始则是前端页面的配置。"><span class="nav-number">4.</span> <span class="nav-text">好了，到此为止前三步都是在服务端进行的，下面开始则是前端页面的配置。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#要在前端页面中进行的："><span class="nav-number"></span> <span class="nav-text">要在前端页面中进行的：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、在公众平台中设置安全域名"><span class="nav-number">1.</span> <span class="nav-text">一、在公众平台中设置安全域名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、引入js文件"><span class="nav-number">2.</span> <span class="nav-text">二、引入js文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、通过config接口注入权限验证配置"><span class="nav-number">3.</span> <span class="nav-text">三、通过config接口注入权限验证配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、通过ready处理验证成功的事件"><span class="nav-number">4.</span> <span class="nav-text">四、通过ready处理验证成功的事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、通过error处理失败的验证"><span class="nav-number">5.</span> <span class="nav-text">五、通过error处理失败的验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最后呢，总结一下，微信的分享的相关的配置多数还是在服务端完成，注意一下签名的url要和页面的url一致，安全域名填写正确，access-token和jsapi-ticket都在服务端缓存好。好了，微信分享的配置就说到这里了。"><span class="nav-number">6.</span> <span class="nav-text">最后呢，总结一下，微信的分享的相关的配置多数还是在服务端完成，注意一下签名的url要和页面的url一致，安全域名填写正确，access_token和jsapi_ticket都在服务端缓存好。好了，微信分享的配置就说到这里了。</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xuejian</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">个人专属</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">博客 &mdash; <a class="theme-link" href="http://blog.hanxuejian.com">blog</a> </div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

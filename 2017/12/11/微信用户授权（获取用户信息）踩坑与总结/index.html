@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="微信," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="正文开始前先说一下整个微信用户授权的整体流程：公众号配置回调域名——&amp;gt;获取微信授权code——&amp;gt;用code获取access_token——&amp;gt;用access_token获取用户信息。 一、配置授权回调域名登陆微信公众平台，左侧边栏点击“公众号设置”，弹出页中选择“功能设置”，下方“网页授权域名”后面点击“设置”按钮，在弹出的页面中填上”授权回调页面域名”，需要注意的是，此处的回调域">
+<meta name="keywords" content="微信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信用户授权（获取用户信息）踩坑与总结">
+<meta property="og:url" content="http://yoursite.com/2017/12/11/微信用户授权（获取用户信息）踩坑与总结/index.html">
+<meta property="og:site_name" content="my blog">
+<meta property="og:description" content="正文开始前先说一下整个微信用户授权的整体流程：公众号配置回调域名——&amp;gt;获取微信授权code——&amp;gt;用code获取access_token——&amp;gt;用access_token获取用户信息。 一、配置授权回调域名登陆微信公众平台，左侧边栏点击“公众号设置”，弹出页中选择“功能设置”，下方“网页授权域名”后面点击“设置”按钮，在弹出的页面中填上”授权回调页面域名”，需要注意的是，此处的回调域">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2017/12/11/微信用户授权（获取用户信息）踩坑与总结/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/12/11/微信用户授权（获取用户信息）踩坑与总结/2.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/12/11/微信用户授权（获取用户信息）踩坑与总结/3.jpg">
+<meta property="og:updated_time" content="2017-12-28T02:27:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信用户授权（获取用户信息）踩坑与总结">
+<meta name="twitter:description" content="正文开始前先说一下整个微信用户授权的整体流程：公众号配置回调域名——&amp;gt;获取微信授权code——&amp;gt;用code获取access_token——&amp;gt;用access_token获取用户信息。 一、配置授权回调域名登陆微信公众平台，左侧边栏点击“公众号设置”，弹出页中选择“功能设置”，下方“网页授权域名”后面点击“设置”按钮，在弹出的页面中填上”授权回调页面域名”，需要注意的是，此处的回调域">
+<meta name="twitter:image" content="http://yoursite.com/2017/12/11/微信用户授权（获取用户信息）踩坑与总结/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/11/微信用户授权（获取用户信息）踩坑与总结/"/>
+
+
+
+
+
+  <title>微信用户授权（获取用户信息）踩坑与总结 | my blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">my blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/11/微信用户授权（获取用户信息）踩坑与总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xuejian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="my blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微信用户授权（获取用户信息）踩坑与总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-11T13:29:09+08:00">
+                2017-12-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/微信/" itemprop="url" rel="index">
+                    <span itemprop="name">微信</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="正文开始前先说一下整个微信用户授权的整体流程："><a href="#正文开始前先说一下整个微信用户授权的整体流程：" class="headerlink" title="正文开始前先说一下整个微信用户授权的整体流程："></a>正文开始前先说一下整个微信用户授权的整体流程：</h4><p>公众号配置回调域名——&gt;获取微信授权code——&gt;用code获取access_token——&gt;用access_token获取用户信息。</p>
+<h3 id="一、配置授权回调域名"><a href="#一、配置授权回调域名" class="headerlink" title="一、配置授权回调域名"></a>一、配置授权回调域名</h3><p>登陆微信公众平台，左侧边栏点击“公众号设置”，弹出页中选择“功能设置”，下方“网页授权域名”后面点击“设置”按钮，在弹出的页面中填上”授权回调页面域名”，<span style="color:#ff0020">需要注意的是，此处的回调域名要与代码中实际的回调域名一致，并且特别提醒下，我们在测试环境下测试完成后记得要在公众号里把回调域名和代码中都改成生产环境下的域名。</span><br>授权域名填写完成后要把微信提供的一个txt文件放到该域名指向的web服务器下面，如果填写的是一个路径，则放在该路径下面。<span style="color:#ff0020">同样此处特别提下，如果项目使用了类似slim一样的框架，该txt文件要放到入口页面所在的文件夹下面。 </span>比如我做过的一个项目入口在public-&gt;index.php，所以txt我就放在了和public目录下面。<br><img src="/2017/12/11/微信用户授权（获取用户信息）踩坑与总结/1.jpg" alt="fiddler配置图片"></p>
+<h3 id="二、获取code"><a href="#二、获取code" class="headerlink" title="二、获取code"></a>二、获取code</h3><p>引导用户进入如下页面：<br><a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&amp;redirect_uri=REDIRECT_URI&amp;response_type=code&amp;scope=SCOPE&amp;state=STATE#wechat_redirect" target="_blank" rel="external">https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&amp;redirect_uri=REDIRECT_URI&amp;response_type=code&amp;scope=SCOPE&amp;state=STATE#wechat_redirect</a><br>介绍一下链接中的参数：<br>1.appid：公众号的唯一标识，在公众平台中可以获取。<br>2.redirect_uri：微信授权后重定向的回调链接地址，记得要对其进行urlencode。在这里有个坑，<span style="color:#ff0020">该回调地址其实就是页面在经过微信的授权后要返回到哪个页面，可以是任意一个你想要回调的路径。</span><br>3.response_type：返回类型，写code就行。<br>4.scope：应用授权作用域，关于这个参数要多说一句，scope的值可以写两种类型，一个是snsapi_base，另一个是snsapi_userinfo，这两个的区别是前者不会弹出授权页面，直接跳转，用户不会感觉到授权的过程，但是只能获取到openid，<span style="color:#ff0020">并且需要用户关注公众号</span>。后者会弹出一个授权的页面，经过用户的同意后才能获得授权信息，<span style="color:#ff0020">即使用户未关注也能获取到用户信息</span>，并且包含昵称、性别、所在地等等。<br>5.state：state为一个a-zA-Z0-9的参数值，可以随便写，写1也行。 对了，该参数非必需，其他5个参数为必须项。<br>6.#wechat_redirect：无论直接打开还是做页面302重定向时候，必须带此参数,直接写在后面就行。  </p>
+<h3 id="三、通过code获取access-token"><a href="#三、通过code获取access-token" class="headerlink" title="三、通过code获取access_token"></a>三、通过code获取access_token</h3><p>此处注意，<span style="color:#ff0020">获取access_token的步骤必须要在服务器端进行，因为appid和secret不能外露，必须保存在服务器上。</span><br>获取到code后，用get方法请求一下链接来获取access_token：<a href="https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&amp;secret=SECRET&amp;code=CODE&amp;grant_type=authorization_code" target="_blank" rel="external">https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&amp;secret=SECRET&amp;code=CODE&amp;grant_type=authorization_code</a><br>继续介绍一下链接中的参数：<br>1.appid：公众号的唯一标识，公众号设置中可以获得，这个不多说了。<br>2.secret：同appid，也在公众号设置中可以获得。<br>3.code：此code为步骤二中获取到的code。<br>4.grant_type：  填写为authorization_code，写死即可。<br>正确请求时返回如下，看图就行了：<br><img src="/2017/12/11/微信用户授权（获取用户信息）踩坑与总结/2.jpg" alt="fiddler配置图片">  </p>
+<h3 id="四、通过access-token获取用户信息"><a href="#四、通过access-token获取用户信息" class="headerlink" title="四、通过access_token获取用户信息"></a>四、通过access_token获取用户信息</h3><p>终于到了最后一步了，用步骤三获取到的acess_token，用get方法，请求如下链接：<a href="https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&amp;openid=OPENID&amp;lang=zh_CN" target="_blank" rel="external">https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&amp;openid=OPENID&amp;lang=zh_CN</a> ，（官方说请使用https协议）<br>照例解释下参数：<br>1.access_token：步骤三获取到的acess_token，注意此token为网页接口授权凭证，与公众号分享时用到的基础支持的access_token不同。<br>2.openid：用户的唯一标识，步骤三获取access_token时获取到的openid，用于识别用户。<br>3.long：返回国家地区语言版本，zh_CN 简体，zh_TW 繁体，en 英语，在中国直接写zh_CN就行。<br>正确返回时信息如下，看图，终于得到了我们梦寐以求的用户信息了。。。：<br><img src="/2017/12/11/微信用户授权（获取用户信息）踩坑与总结/3.jpg" alt="fiddler配置图片"><br>继续介绍参数，大家一看就知道是什么意思，我就直接引用官网说明了:<br>1.openid：用户的唯一标识。<br>2.nickname：用户昵称。<br>3.sex：用户的性别，值为1时是男性，值为2时是女性，值为0时是未知。<br>4.province：    用户个人资料填写的省份。<br>5.city：普通用户个人资料填写的城市。<br>6.country：国家，如中国为CN。<br>7.headimgurl：用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。<br>8.privilege：用户特权信息，json 数组，如微信沃卡用户为（chinaunicom）。<br>9.unionid：只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。  </p>
+<h3 id="五、最后其他"><a href="#五、最后其他" class="headerlink" title="五、最后其他"></a>五、最后其他</h3><p> 如果调用错误时会返回json数据：<br> {“error”:40003,”errmsg”:”invalid openid”}</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/微信/" rel="tag"># 微信</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/12/用fiddler进行手机抓包/" rel="next" title="用fiddler进行手机抓包">
+                <i class="fa fa-chevron-left"></i> 用fiddler进行手机抓包
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/25/微信分享配置以及相关参数获取方法/" rel="prev" title="微信分享配置以及相关参数获取方法">
+                微信分享配置以及相关参数获取方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/avatar.jpg"
+              alt="xuejian" />
+          
+            <p class="site-author-name" itemprop="name">xuejian</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#正文开始前先说一下整个微信用户授权的整体流程："><span class="nav-number">1.</span> <span class="nav-text">正文开始前先说一下整个微信用户授权的整体流程：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一、配置授权回调域名"><span class="nav-number"></span> <span class="nav-text">一、配置授权回调域名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、获取code"><span class="nav-number"></span> <span class="nav-text">二、获取code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、通过code获取access-token"><span class="nav-number"></span> <span class="nav-text">三、通过code获取access_token</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、通过access-token获取用户信息"><span class="nav-number"></span> <span class="nav-text">四、通过access_token获取用户信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、最后其他"><span class="nav-number"></span> <span class="nav-text">五、最后其他</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xuejian</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">个人专属</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">博客 &mdash; <a class="theme-link" href="http://blog.hanxuejian.com">blog</a> </div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

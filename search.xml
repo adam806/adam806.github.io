@@ -38,6 +38,12 @@
 <p>tudo:图片</p>
 ]]></content>
       
+        <categories>
+            
+            <category> css </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -113,6 +119,18 @@
 <p>现在再运行npm run build就会把webpack的代码打包到runtime.xxx.js中，webpack代码分离完毕。</p>
 <h4 id="至此，一次基本的webpack-vue的配置已经完成了。如果不想使用vue-cli大礼包，webpack基本的一些配置好是要了解一些的。"><a href="#至此，一次基本的webpack-vue的配置已经完成了。如果不想使用vue-cli大礼包，webpack基本的一些配置好是要了解一些的。" class="headerlink" title="至此，一次基本的webpack+vue的配置已经完成了。如果不想使用vue-cli大礼包，webpack基本的一些配置好是要了解一些的。"></a>至此，一次基本的webpack+vue的配置已经完成了。如果不想使用vue-cli大礼包，webpack基本的一些配置好是要了解一些的。</h4><h4 id="最后，生产环境下上传文件只需把dist文件夹下的内容上传至服务器即可。"><a href="#最后，生产环境下上传文件只需把dist文件夹下的内容上传至服务器即可。" class="headerlink" title="最后，生产环境下上传文件只需把dist文件夹下的内容上传至服务器即可。"></a>最后，生产环境下上传文件只需把dist文件夹下的内容上传至服务器即可。</h4>]]></content>
       
+        <categories>
+            
+            <category> vue </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> vue </tag>
+            
+        </tags>
         
     </entry>
     

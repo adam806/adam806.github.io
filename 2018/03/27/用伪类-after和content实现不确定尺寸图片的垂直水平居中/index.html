@@ -55,7 +55,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="综合，杂," />
+  <meta name="keywords" content="css," />
 
 
 
@@ -71,23 +71,22 @@
 
 
 
-<meta name="description" content="网上已经有了很多fiddler的抓包方法，本篇文章仅用于记录我自己对fiddler进行收集抓包的相关设置。   要保证手机抓包能够顺利进行，手机与电脑一定要保持在同一个网段中，好了，正文开始： 一、pc上的参数设置1.允许监听https依次点击’Tools’-&amp;gt;’Options’-&amp;gt;’Https’-&amp;gt;,勾选如下几个：’Capture HTTPS CONNECTS’,’Derypt">
-<meta name="keywords" content="综合，杂">
+<meta name="description" content="用::after和content实现图片的居中是我认为的最好的实现图片居中的方法，不需要知道图片的尺寸，任意图片都能居中。进入正文前先说下什么是伪元素和伪类。一：伪元素和伪类通俗点说，伪元素就是一个虚假的元素，同样伪类就是一个虚假的类。伪元素等同于在html结构结构中写一个元素，伪类等同于给一个元素添加一个类。伪元素：123456&amp;lt;style&amp;gt;p::first-letter&amp;#123;">
+<meta name="keywords" content="css">
 <meta property="og:type" content="article">
-<meta property="og:title" content="用fiddler进行手机抓包">
-<meta property="og:url" content="http://yoursite.com/2017/10/12/用fiddler进行手机抓包/index.html">
+<meta property="og:title" content="用伪类::after和content实现不确定尺寸图片的垂直水平居中">
+<meta property="og:url" content="http://yoursite.com/2018/03/27/用伪类-after和content实现不确定尺寸图片的垂直水平居中/index.html">
 <meta property="og:site_name" content="积跬步，至千里">
-<meta property="og:description" content="网上已经有了很多fiddler的抓包方法，本篇文章仅用于记录我自己对fiddler进行收集抓包的相关设置。   要保证手机抓包能够顺利进行，手机与电脑一定要保持在同一个网段中，好了，正文开始： 一、pc上的参数设置1.允许监听https依次点击’Tools’-&amp;gt;’Options’-&amp;gt;’Https’-&amp;gt;,勾选如下几个：’Capture HTTPS CONNECTS’,’Derypt">
+<meta property="og:description" content="用::after和content实现图片的居中是我认为的最好的实现图片居中的方法，不需要知道图片的尺寸，任意图片都能居中。进入正文前先说下什么是伪元素和伪类。一：伪元素和伪类通俗点说，伪元素就是一个虚假的元素，同样伪类就是一个虚假的类。伪元素等同于在html结构结构中写一个元素，伪类等同于给一个元素添加一个类。伪元素：123456&amp;lt;style&amp;gt;p::first-letter&amp;#123;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2017/10/12/用fiddler进行手机抓包/fiddler1.jpg">
-<meta property="og:image" content="http://yoursite.com/2017/10/12/用fiddler进行手机抓包/fiddler2.jpg">
-<meta property="og:image" content="http://yoursite.com/2017/10/12/用fiddler进行手机抓包/fiddler3.jpg">
-<meta property="og:image" content="http://yoursite.com/2017/10/12/用fiddler进行手机抓包/fiddler4.jpg">
-<meta property="og:updated_time" content="2017-12-18T04:20:26.000Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/27/用伪类-after和content实现不确定尺寸图片的垂直水平居中/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/27/用伪类-after和content实现不确定尺寸图片的垂直水平居中/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/27/用伪类-after和content实现不确定尺寸图片的垂直水平居中/3.png">
+<meta property="og:updated_time" content="2018-03-27T04:29:09.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="用fiddler进行手机抓包">
-<meta name="twitter:description" content="网上已经有了很多fiddler的抓包方法，本篇文章仅用于记录我自己对fiddler进行收集抓包的相关设置。   要保证手机抓包能够顺利进行，手机与电脑一定要保持在同一个网段中，好了，正文开始： 一、pc上的参数设置1.允许监听https依次点击’Tools’-&amp;gt;’Options’-&amp;gt;’Https’-&amp;gt;,勾选如下几个：’Capture HTTPS CONNECTS’,’Derypt">
-<meta name="twitter:image" content="http://yoursite.com/2017/10/12/用fiddler进行手机抓包/fiddler1.jpg">
+<meta name="twitter:title" content="用伪类::after和content实现不确定尺寸图片的垂直水平居中">
+<meta name="twitter:description" content="用::after和content实现图片的居中是我认为的最好的实现图片居中的方法，不需要知道图片的尺寸，任意图片都能居中。进入正文前先说下什么是伪元素和伪类。一：伪元素和伪类通俗点说，伪元素就是一个虚假的元素，同样伪类就是一个虚假的类。伪元素等同于在html结构结构中写一个元素，伪类等同于给一个元素添加一个类。伪元素：123456&amp;lt;style&amp;gt;p::first-letter&amp;#123;">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/27/用伪类-after和content实现不确定尺寸图片的垂直水平居中/1.png">
 
 
 
@@ -117,13 +116,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/10/12/用fiddler进行手机抓包/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/27/用伪类-after和content实现不确定尺寸图片的垂直水平居中/"/>
 
 
 
 
 
-  <title>用fiddler进行手机抓包 | 积跬步，至千里</title>
+  <title>用伪类::after和content实现不确定尺寸图片的垂直水平居中 | 积跬步，至千里</title>
   
 
 
@@ -250,7 +249,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/12/用fiddler进行手机抓包/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/用伪类-after和content实现不确定尺寸图片的垂直水平居中/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="xuejian">
@@ -267,7 +266,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">用fiddler进行手机抓包</h1>
+          <h1 class="post-title" itemprop="name headline">用伪类::after和content实现不确定尺寸图片的垂直水平居中</h1>
         
 
         <div class="post-meta">
@@ -279,8 +278,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-12T00:00:00+08:00">
-                2017-10-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-27T11:52:52+08:00">
+                2018-03-27
               </time>
             
 
@@ -302,8 +301,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/综合，杂/" itemprop="url" rel="index">
-                    <span itemprop="name">综合，杂</span>
+                  <a href="/categories/css/" itemprop="url" rel="index">
+                    <span itemprop="name">css</span>
                   </a>
                 </span>
 
@@ -339,14 +338,13 @@
       
 
       
-        <p>网上已经有了很多fiddler的抓包方法，本篇文章仅用于记录我自己对fiddler进行收集抓包的相关设置。  </p>
-<p>要保证手机抓包能够顺利进行，手机与电脑一定要保持在同一个网段中，好了，正文开始：</p>
-<h3 id="一、pc上的参数设置"><a href="#一、pc上的参数设置" class="headerlink" title="一、pc上的参数设置"></a>一、pc上的参数设置</h3><h5 id="1-允许监听https"><a href="#1-允许监听https" class="headerlink" title="1.允许监听https"></a>1.允许监听https</h5><p>依次点击’Tools’-&gt;’Options’-&gt;’Https’-&gt;,勾选如下几个：’Capture HTTPS CONNECTS’,’Derypt HTTPS traffic’,’Ignore server certificate errors(unsafe)’,然后点击’OK’。<br><img src="/2017/10/12/用fiddler进行手机抓包/fiddler1.jpg" alt="fiddler配置图片"></p>
-<h5 id="2-允许远程连接"><a href="#2-允许远程连接" class="headerlink" title="2.允许远程连接"></a>2.允许远程连接</h5><p>依次点击’Tools’-&gt;’Options’-&gt;’Connections’,勾选’Allow remote computers to connect’,默认端口为8888，如有占用可以换为其他端口，然后重启fiddler。<br><img src="/2017/10/12/用fiddler进行手机抓包/fiddler2.jpg" alt="fiddler配置图片"></p>
-<h3 id="二、手机端上的参数设置"><a href="#二、手机端上的参数设置" class="headerlink" title="二、手机端上的参数设置"></a>二、手机端上的参数设置</h3><p>下方的设置是针对安卓手机的，理论上苹果首页也是同样的操作，但是我还没搞清楚ios11如何安装证书，所以等到日后清楚后再更新苹果上的配置方法。<br>配置前需要先知道电脑的ip地址，fiddler的端口号。</p>
-<h5 id="1-手机和电脑链接到同一网络，在手机浏览器上输入：http-ip-端口号"><a href="#1-手机和电脑链接到同一网络，在手机浏览器上输入：http-ip-端口号" class="headerlink" title="1.手机和电脑链接到同一网络，在手机浏览器上输入：http://ip:端口号"></a>1.手机和电脑链接到同一网络，在手机浏览器上输入：<a href="http://ip:端口号" target="_blank" rel="external">http://ip:端口号</a></h5><h5 id="2-前往地址后会出现下载证书的页面，点击’点击FiddlerRootcertificate下载证书’"><a href="#2-前往地址后会出现下载证书的页面，点击’点击FiddlerRootcertificate下载证书’" class="headerlink" title="2.前往地址后会出现下载证书的页面，点击’点击FiddlerRootcertificate下载证书’"></a>2.前往地址后会出现下载证书的页面，点击’点击FiddlerRootcertificate下载证书’</h5><p><img src="/2017/10/12/用fiddler进行手机抓包/fiddler3.jpg" alt="fiddler配置图片"><br><br><br><br> </p>
-<h5 id="3-下载完之后填写证书名称，点击确定"><a href="#3-下载完之后填写证书名称，点击确定" class="headerlink" title="3.下载完之后填写证书名称，点击确定"></a>3.下载完之后填写证书名称，点击确定</h5><p><img src="/2017/10/12/用fiddler进行手机抓包/fiddler4.jpg" alt="fiddler配置图片"><br><br><br><br> </p>
-<h5 id="4-要求设置一个密码，自己设置一个就好，如果不用就去手机设置中去掉就好。"><a href="#4-要求设置一个密码，自己设置一个就好，如果不用就去手机设置中去掉就好。" class="headerlink" title="4.要求设置一个密码，自己设置一个就好，如果不用就去手机设置中去掉就好。"></a>4.要求设置一个密码，自己设置一个就好，如果不用就去手机设置中去掉就好。</h5><h5 id="5-更改手机无线网的代理"><a href="#5-更改手机无线网的代理" class="headerlink" title="5.更改手机无线网的代理"></a>5.更改手机无线网的代理</h5><p>手机上点击无线网-&gt;’修改网络配置’-&gt;’显示高级选项’-&gt;’代理服务器’-&gt;’手动’,ip设置为电脑的ip，端口号设置为fiddler设置的端口号。<br>到此，所有设置已经完成，抓包完成后记得把代理关掉，不然可能没法正常上网。</p>
+        <h4 id="用-after和content实现图片的居中是我认为的最好的实现图片居中的方法，不需要知道图片的尺寸，任意图片都能居中。进入正文前先说下什么是伪元素和伪类。"><a href="#用-after和content实现图片的居中是我认为的最好的实现图片居中的方法，不需要知道图片的尺寸，任意图片都能居中。进入正文前先说下什么是伪元素和伪类。" class="headerlink" title="用::after和content实现图片的居中是我认为的最好的实现图片居中的方法，不需要知道图片的尺寸，任意图片都能居中。进入正文前先说下什么是伪元素和伪类。"></a>用::after和content实现图片的居中是我认为的最好的实现图片居中的方法，不需要知道图片的尺寸，任意图片都能居中。进入正文前先说下什么是伪元素和伪类。</h4><h3 id="一：伪元素和伪类"><a href="#一：伪元素和伪类" class="headerlink" title="一：伪元素和伪类"></a>一：伪元素和伪类</h3><p>通俗点说，伪元素就是一个虚假的元素，同样伪类就是一个虚假的类。伪元素等同于在html结构结构中写一个元素，伪类等同于给一个元素添加一个类。<br>伪元素：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;style&gt;</div><div class="line">p::first-letter&#123;</div><div class="line">  color:red</div><div class="line">&#125;</div><div class="line">&lt;/style&gt;</div><div class="line">&lt;p&gt;hello world!&lt;/p&gt;</div></pre></td></tr></table></figure></p>
+<p>效果就是hello的第一个字母‘h’变红：<br><img src="/2018/03/27/用伪类-after和content实现不确定尺寸图片的垂直水平居中/1.png" alt="伪类"><br>等同于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;style&gt;</div><div class="line">.first-letter&#123;</div><div class="line">  color:red</div><div class="line">&#125;</div><div class="line">&lt;/style&gt;</div><div class="line">&lt;p&gt;&lt;span class=&quot;first-letter&quot;&gt;h&lt;/span&gt;ello world!&lt;/p&gt;</div></pre></td></tr></table></figure></p>
+<p>伪类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;style&gt;</div><div class="line">ul li:first-child&#123;</div><div class="line">  color:red;</div><div class="line">&#125;</div><div class="line">&lt;/style&gt;</div><div class="line">&lt;ul&gt;</div><div class="line"> &lt;li&gt;hello&lt;/li&gt;</div><div class="line"> &lt;li&gt;world!&lt;/li&gt;</div><div class="line">&lt;/ul&gt;</div></pre></td></tr></table></figure></p>
+<p>效果就是hello变红了:<br><img src="/2018/03/27/用伪类-after和content实现不确定尺寸图片的垂直水平居中/2.png" alt="伪类"><br>等同于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;style&gt;</div><div class="line">.first-child&#123;</div><div class="line">  color:red;</div><div class="line">&#125;</div><div class="line">&lt;/style&gt;</div><div class="line">&lt;ul&gt;</div><div class="line"> &lt;li class=&quot;first-child&quot;&gt;hello&lt;/li&gt;</div><div class="line"> &lt;li&gt;world!&lt;/li&gt;</div><div class="line">&lt;/ul&gt;</div></pre></td></tr></table></figure></p>
+<p>伪元素用“：：”，伪类用“：”，有时候考虑下兼容性问题伪元素也会使用“：”。</p>
+<h3 id="二-用：after伪类进行图片居中"><a href="#二-用：after伪类进行图片居中" class="headerlink" title="二.用：after伪类进行图片居中"></a>二.用：after伪类进行图片居中</h3><p>直接上代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;style&gt;</div><div class="line">.img_outer&#123;</div><div class="line">  width:400px;</div><div class="line">  height:300px;</div><div class="line">  background-color:slateblue;</div><div class="line">  text-align:center; /*水平居中*/</div><div class="line">&#125;</div><div class="line">.img_inner&#123;</div><div class="line">  /*没有规定图片尺寸，尺寸任意*/</div><div class="line">  vertical-align:middle;</div><div class="line">&#125;</div><div class="line">.img_outer::after&#123;</div><div class="line">  display:inline-block;</div><div class="line">  width:0;</div><div class="line">  height:100%;</div><div class="line">  content:&apos;center&apos;;/*此处的cotent一定要有，即使content：‘’也不能把content拿掉*/</div><div class="line">  vertical-align:middle;</div><div class="line">  overflow:hidde;</div><div class="line">&#125;</div><div class="line">&lt;/style&gt;</div><div class="line">&lt;div class=&quot;img_outer&quot;&gt;</div><div class="line">  &lt;img class=&quot;img_inner&quot; src=&quot;xxxxxxx.jpg&quot;&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
+<p><img src="/2018/03/27/用伪类-after和content实现不确定尺寸图片的垂直水平居中/3.png" alt="伪类"></p>
 
       
     </div>
@@ -364,7 +362,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/综合，杂/" rel="tag"># 综合，杂</a>
+            <a href="/tags/css/" rel="tag"># css</a>
           
         </div>
       
@@ -377,8 +375,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/01/markdown语法/" rel="next" title="markdown语法">
-                <i class="fa fa-chevron-left"></i> markdown语法
+              <a href="/2018/02/24/flex布局语法全记录/" rel="next" title="flex布局语法全记录">
+                <i class="fa fa-chevron-left"></i> flex布局语法全记录
               </a>
             
           </div>
@@ -386,10 +384,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/12/11/微信用户授权（获取用户信息）踩坑与总结/" rel="prev" title="微信用户授权（获取用户信息）踩坑与总结">
-                微信用户授权（获取用户信息）踩坑与总结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -526,7 +520,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、pc上的参数设置"><span class="nav-number">1.</span> <span class="nav-text">一、pc上的参数设置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-允许监听https"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.允许监听https</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-允许远程连接"><span class="nav-number">1.0.2.</span> <span class="nav-text">2.允许远程连接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、手机端上的参数设置"><span class="nav-number">2.</span> <span class="nav-text">二、手机端上的参数设置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-手机和电脑链接到同一网络，在手机浏览器上输入：http-ip-端口号"><span class="nav-number">2.0.1.</span> <span class="nav-text">1.手机和电脑链接到同一网络，在手机浏览器上输入：http://ip:端口号</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-前往地址后会出现下载证书的页面，点击’点击FiddlerRootcertificate下载证书’"><span class="nav-number">2.0.2.</span> <span class="nav-text">2.前往地址后会出现下载证书的页面，点击’点击FiddlerRootcertificate下载证书’</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-下载完之后填写证书名称，点击确定"><span class="nav-number">2.0.3.</span> <span class="nav-text">3.下载完之后填写证书名称，点击确定</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-要求设置一个密码，自己设置一个就好，如果不用就去手机设置中去掉就好。"><span class="nav-number">2.0.4.</span> <span class="nav-text">4.要求设置一个密码，自己设置一个就好，如果不用就去手机设置中去掉就好。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-更改手机无线网的代理"><span class="nav-number">2.0.5.</span> <span class="nav-text">5.更改手机无线网的代理</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#用-after和content实现图片的居中是我认为的最好的实现图片居中的方法，不需要知道图片的尺寸，任意图片都能居中。进入正文前先说下什么是伪元素和伪类。"><span class="nav-number">1.</span> <span class="nav-text">用::after和content实现图片的居中是我认为的最好的实现图片居中的方法，不需要知道图片的尺寸，任意图片都能居中。进入正文前先说下什么是伪元素和伪类。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一：伪元素和伪类"><span class="nav-number"></span> <span class="nav-text">一：伪元素和伪类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-用：after伪类进行图片居中"><span class="nav-number"></span> <span class="nav-text">二.用：after伪类进行图片居中</span></a></div>
             
 
           </div>

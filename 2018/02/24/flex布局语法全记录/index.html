@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="y8VbfmqVeG" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="css," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="简单来说，使用flex布局的就是为了解决传统布局中对于一些特殊的布局的实现起来的不方便，说一个最常见的例子就是垂直居中。felx布局也称为弹性布局，目前个大传统浏览器和移动端浏览器的支持程度都还不错，可以放心大胆的使用了，亲测发现，熟练了以后用起来很爽！说在前面的话：flex布局也可以称为弹性布局，任何一个容器都可以作为flex容器，但是需要注意的是：使用了felx后，子元素的float">
+<meta name="keywords" content="css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flex布局语法全记录">
+<meta property="og:url" content="http://yoursite.com/2018/02/24/flex布局语法全记录/index.html">
+<meta property="og:site_name" content="积跬步，至千里">
+<meta property="og:description" content="简单来说，使用flex布局的就是为了解决传统布局中对于一些特殊的布局的实现起来的不方便，说一个最常见的例子就是垂直居中。felx布局也称为弹性布局，目前个大传统浏览器和移动端浏览器的支持程度都还不错，可以放心大胆的使用了，亲测发现，熟练了以后用起来很爽！说在前面的话：flex布局也可以称为弹性布局，任何一个容器都可以作为flex容器，但是需要注意的是：使用了felx后，子元素的float">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-24T09:36:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="flex布局语法全记录">
+<meta name="twitter:description" content="简单来说，使用flex布局的就是为了解决传统布局中对于一些特殊的布局的实现起来的不方便，说一个最常见的例子就是垂直居中。felx布局也称为弹性布局，目前个大传统浏览器和移动端浏览器的支持程度都还不错，可以放心大胆的使用了，亲测发现，熟练了以后用起来很爽！说在前面的话：flex布局也可以称为弹性布局，任何一个容器都可以作为flex容器，但是需要注意的是：使用了felx后，子元素的float">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/24/flex布局语法全记录/"/>
+
+
+
+
+
+  <title>flex布局语法全记录 | 积跬步，至千里</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?aa1014056bbec3cd65fcc78d542465c8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">积跬步，至千里</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/24/flex布局语法全记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xuejian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="积跬步，至千里">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">flex布局语法全记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-24T14:56:20+08:00">
+                2018-02-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/css/" itemprop="url" rel="index">
+                    <span itemprop="name">css</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="简单来说，使用flex布局的就是为了解决传统布局中对于一些特殊的布局的实现起来的不方便，说一个最常见的例子就是垂直居中。felx布局也称为弹性布局，目前个大传统浏览器和移动端浏览器的支持程度都还不错，可以放心大胆的使用了，亲测发现，熟练了以后用起来很爽！"><a href="#简单来说，使用flex布局的就是为了解决传统布局中对于一些特殊的布局的实现起来的不方便，说一个最常见的例子就是垂直居中。felx布局也称为弹性布局，目前个大传统浏览器和移动端浏览器的支持程度都还不错，可以放心大胆的使用了，亲测发现，熟练了以后用起来很爽！" class="headerlink" title="简单来说，使用flex布局的就是为了解决传统布局中对于一些特殊的布局的实现起来的不方便，说一个最常见的例子就是垂直居中。felx布局也称为弹性布局，目前个大传统浏览器和移动端浏览器的支持程度都还不错，可以放心大胆的使用了，亲测发现，熟练了以后用起来很爽！"></a>简单来说，使用flex布局的就是为了解决传统布局中对于一些特殊的布局的实现起来的不方便，说一个最常见的例子就是垂直居中。felx布局也称为弹性布局，目前个大传统浏览器和移动端浏览器的支持程度都还不错，可以放心大胆的使用了，亲测发现，熟练了以后用起来很爽！</h5><h4 id="说在前面的话：flex布局也可以称为弹性布局，任何一个容器都可以作为flex容器，但是需要注意的是：使用了felx后，子元素的float、clear、vertical-align都将失效。"><a href="#说在前面的话：flex布局也可以称为弹性布局，任何一个容器都可以作为flex容器，但是需要注意的是：使用了felx后，子元素的float、clear、vertical-align都将失效。" class="headerlink" title="说在前面的话：flex布局也可以称为弹性布局，任何一个容器都可以作为flex容器，但是需要注意的是：使用了felx后，子元素的float、clear、vertical-align都将失效。"></a>说在前面的话：flex布局也可以称为弹性布局，任何一个容器都可以作为flex容器，但是需要注意的是：使用了felx后，子元素的float、clear、vertical-align都将失效。</h4><h3 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1.基本概念"></a>1.基本概念</h3><p>采用了flex布局的元素称为“flex容器”，他的子元素也就成了容器成员，称为“flex项目”。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">/*flex布局的父元素*/</div><div class="line">.box&#123;  </div><div class="line">  display:flex</div><div class="line">&#125;</div><div class="line"></div><div class="line">/*使用了flex布局的父元素，表现为行内元素*/</div><div class="line">.box&#123;  </div><div class="line">  display:inline-flex</div><div class="line">&#125;</div><div class="line"></div><div class="line">/*webkit内核的浏览器要加webkit前缀*/</div><div class="line">.box&#123;  </div><div class="line">  display:-webkit-flex；</div><div class="line">  display:flex;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>容器默认存在两根轴，水平的称为“主轴”，垂直的称为“交叉轴”。<br>主轴的开始位置称为“main start”，结束位置称为“main end”。交叉轴的开始位置称为“cross start”，结束位置称为“cross end”。项目（容器成员）默认沿着主轴排列，当然修改属性可以修改成员的排列方式。  </p>
+<h3 id="2-容器的属性"><a href="#2-容器的属性" class="headerlink" title="2.容器的属性"></a>2.容器的属性</h3><p>容器的属性分为六个：<br>(1)flex-direction<br>(2)flex-wrap<br>(3)flex-flow<br>(4)justify-content<br>(5)align-items<br>(6)align-content。  </p>
+<p>下面将分别介绍每一条属性：  </p>
+<h4 id="2-1-flex-direction"><a href="#2-1-flex-direction" class="headerlink" title="2.1 flex-direction"></a>2.1 flex-direction</h4><p>flex-direction属性决定主轴的方向,也就是项目的排列方向。属性有四个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">flex-direction:row | row-reverse | column | column-revers;</div></pre></td></tr></table></figure></p>
+<p>row（默认值）：主轴为水平方向，起点在左端。<br>row-reverse：主轴为水平方向，起点在右端。<br>column：主轴为垂直方向，起点在上沿。<br>column-reverse：主轴为垂直方向，起点在下沿。  </p>
+<p>toto:图片</p>
+<h4 id="2-2-flex-wrap"><a href="#2-2-flex-wrap" class="headerlink" title="2.2 flex-wrap"></a>2.2 flex-wrap</h4><p>flex-wrap表示如果一行排列不下所有的子元素，规定应该如何换行，属性有个三个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">flex-wrap: nowrap | wrap | wrap-reverse;</div></pre></td></tr></table></figure></p>
+<p>nowrap（默认）：不换行。<br>wrap：换行，第一行在上方，也就是从上到下挨着排。<br>wrap-reverse：换行，第一行在下方，可以理解成从下到上挨着排。  </p>
+<p>todo：图片</p>
+<h4 id="2-3-flex-flow"><a href="#2-3-flex-flow" class="headerlink" title="2.3 flex-flow"></a>2.3 flex-flow</h4><p>flex-flow是flex-direction属性和flex-wrap属性的简写形式，即把两条属性合为一条来写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">flex-flow: flex-direction || flex-wrap；</div></pre></td></tr></table></figure></p>
+<p>默认值为：flex-flow：row nowrap；</p>
+<h4 id="2-4-justify-content"><a href="#2-4-justify-content" class="headerlink" title="2.4 justify-content"></a>2.4 justify-content</h4><p>justify-content属性定义了项目在主上的对齐方式，值有五个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">justify-content: flex-start | flex-end | center | space-between | space-around;</div></pre></td></tr></table></figure></p>
+<p><span style="color:red">需要注意的一点是这些对齐方式是跟随着轴的方向走的。</span>下面是以主轴从左到右方向：<br>flex-start（默认值）：左对齐。<br>flex-end：右对齐。<br>center： 居中。<br>space-between：两端对齐，项目之间的间隔都相等。<br>space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。<br><br>tudo：图片  </p>
+<h4 id="2-5-align-items"><a href="#2-5-align-items" class="headerlink" title="2.5 align-items"></a>2.5 align-items</h4><p>align-items属性定义项目在交叉轴上如何对齐，属性有五条：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">align-items: flex-start | flex-end | center | baseline | stretch;</div></pre></td></tr></table></figure></p>
+<p>flex-start：交叉轴的起点对齐。<br>flex-end：交叉轴的终点对齐。<br>center：交叉轴的中点对齐。<br>baseline: 项目的第一行文字的基线对齐。<br>stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。  </p>
+<p>tudo:图片</p>
+<h4 id="2-6-align-content"><a href="#2-6-align-content" class="headerlink" title="2.6 align-content"></a>2.6 align-content</h4><p>align-content属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。属性有六个： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">align-content: flex-start | flex-end | center | space-between | space-around | stretch;</div></pre></td></tr></table></figure>
+<p>flex-start：与交叉轴的起点对齐。<br>flex-end：与交叉轴的终点对齐。<br>center：与交叉轴的中点对齐。<br>space-between：与交叉轴两端对齐，轴线之间的间隔平均分布。<br>space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。<br>stretch（默认值）：轴线占满整个交叉轴。  </p>
+<h3 id="3-项目属性"><a href="#3-项目属性" class="headerlink" title="3.项目属性"></a>3.项目属性</h3><p>项目属性分为六个：<br>(1)order<br>(2)flex-grow<br>(3)flex-shrink<br>(4)flex-basis<br>(5)flex<br>(6)align-self  </p>
+<h4 id="3-1-oroder"><a href="#3-1-oroder" class="headerlink" title="3.1 oroder"></a>3.1 oroder</h4><p>order属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">order:-2|-1|0|1|2|3|.....</div></pre></td></tr></table></figure>
+<p>tudo:图片</p>
+<h4 id="3-2-flex-grow"><a href="#3-2-flex-grow" class="headerlink" title="3.2 flex-grow"></a>3.2 flex-grow</h4><p>flex-grow属性定义项目的放大比例，比如：一个项目的flex-grow是2，其他的是1，则是2的这个项目占据的空间是为1的项目的一倍。默认为0，即如果存在剩余空间，也不放大。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">flex-grow: 0|1|2|3....;</div><div class="line"></div><div class="line">````  </div><div class="line"></div><div class="line">tudo:图片</div><div class="line"></div><div class="line">#### 3.3 flex-shrink  </div><div class="line">flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。如果所有项目的flex-shrink属性都为1，当空间不足时，都将等比例缩小。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。</div></pre></td></tr></table></figure></p>
+<p>flex-shrink: 0|1|2|3….; //不能为负值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 3.4 flex-basis</div><div class="line">flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。</div></pre></td></tr></table></figure></p>
+<p>.item {<br>  flex-basis: <length> | auto; //默认值为auto<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">它可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间。</div><div class="line"></div><div class="line">#### 3.5 flex</div><div class="line">flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。</div></pre></td></tr></table></figure></length></p>
+<p>.item {<br>  flex: none | [ &lt;’flex-grow’&gt; &lt;’flex-shrink’&gt;? || &lt;’flex-basis’&gt; ]<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 3.6 align-self</div><div class="line">align-self属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。</div></pre></td></tr></table></figure></p>
+<p>.item {<br>  align-self: auto | flex-start | flex-end | center | baseline | stretch;<br>}<br>````</p>
+<p>tudo:图片</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag"># css</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/17/记录一次webpack的配置/" rel="next" title="记录一次webpack+vue的配置">
+                <i class="fa fa-chevron-left"></i> 记录一次webpack+vue的配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/27/用伪类-after和content实现不确定尺寸图片的垂直水平居中/" rel="prev" title="用伪类::after和content实现不确定尺寸图片的垂直水平居中">
+                用伪类::after和content实现不确定尺寸图片的垂直水平居中 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/avatar.jpg"
+              alt="xuejian" />
+          
+            <p class="site-author-name" itemprop="name">xuejian</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#简单来说，使用flex布局的就是为了解决传统布局中对于一些特殊的布局的实现起来的不方便，说一个最常见的例子就是垂直居中。felx布局也称为弹性布局，目前个大传统浏览器和移动端浏览器的支持程度都还不错，可以放心大胆的使用了，亲测发现，熟练了以后用起来很爽！"><span class="nav-number">1.</span> <span class="nav-text">简单来说，使用flex布局的就是为了解决传统布局中对于一些特殊的布局的实现起来的不方便，说一个最常见的例子就是垂直居中。felx布局也称为弹性布局，目前个大传统浏览器和移动端浏览器的支持程度都还不错，可以放心大胆的使用了，亲测发现，熟练了以后用起来很爽！</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#说在前面的话：flex布局也可以称为弹性布局，任何一个容器都可以作为flex容器，但是需要注意的是：使用了felx后，子元素的float、clear、vertical-align都将失效。"><span class="nav-number"></span> <span class="nav-text">说在前面的话：flex布局也可以称为弹性布局，任何一个容器都可以作为flex容器，但是需要注意的是：使用了felx后，子元素的float、clear、vertical-align都将失效。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-基本概念"><span class="nav-number"></span> <span class="nav-text">1.基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-容器的属性"><span class="nav-number"></span> <span class="nav-text">2.容器的属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-flex-direction"><span class="nav-number"></span> <span class="nav-text">2.1 flex-direction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-flex-wrap"><span class="nav-number"></span> <span class="nav-text">2.2 flex-wrap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-flex-flow"><span class="nav-number"></span> <span class="nav-text">2.3 flex-flow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-justify-content"><span class="nav-number"></span> <span class="nav-text">2.4 justify-content</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-align-items"><span class="nav-number"></span> <span class="nav-text">2.5 align-items</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-align-content"><span class="nav-number"></span> <span class="nav-text">2.6 align-content</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-项目属性"><span class="nav-number"></span> <span class="nav-text">3.项目属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-oroder"><span class="nav-number"></span> <span class="nav-text">3.1 oroder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-flex-grow"><span class="nav-number"></span> <span class="nav-text">3.2 flex-grow</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xuejian</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">个人专属</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">博客 &mdash; <a class="theme-link" href="http://blog.hanxuejian.com">blog</a> </div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

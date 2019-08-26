@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="y8VbfmqVeG" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="vue," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="webpack手动配置+vue项目构建注意本文不涉及vue的具体使用方法，只用于记录vue项目的配置以及打包流程，用于理解vue的单文件系统的构建流程。以下将按照实际的配置步骤顺序进行记录。1.npm初始化项目：1npm init 此命令会自动创建package.json文件，且是未配置过的原始文件。 2.安装wepack，vue，vue-loader1npm i webpack vue vu">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录一次webpack+vue的配置">
+<meta property="og:url" content="http://yoursite.com/2018/02/17/记录一次webpack的配置/index.html">
+<meta property="og:site_name" content="积跬步，至千里">
+<meta property="og:description" content="webpack手动配置+vue项目构建注意本文不涉及vue的具体使用方法，只用于记录vue项目的配置以及打包流程，用于理解vue的单文件系统的构建流程。以下将按照实际的配置步骤顺序进行记录。1.npm初始化项目：1npm init 此命令会自动创建package.json文件，且是未配置过的原始文件。 2.安装wepack，vue，vue-loader1npm i webpack vue vu">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-24T09:36:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记录一次webpack+vue的配置">
+<meta name="twitter:description" content="webpack手动配置+vue项目构建注意本文不涉及vue的具体使用方法，只用于记录vue项目的配置以及打包流程，用于理解vue的单文件系统的构建流程。以下将按照实际的配置步骤顺序进行记录。1.npm初始化项目：1npm init 此命令会自动创建package.json文件，且是未配置过的原始文件。 2.安装wepack，vue，vue-loader1npm i webpack vue vu">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/17/记录一次webpack的配置/"/>
+
+
+
+
+
+  <title>记录一次webpack+vue的配置 | 积跬步，至千里</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?aa1014056bbec3cd65fcc78d542465c8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">积跬步，至千里</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/17/记录一次webpack的配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xuejian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="积跬步，至千里">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">记录一次webpack+vue的配置</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-17T23:02:15+08:00">
+                2018-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vue/" itemprop="url" rel="index">
+                    <span itemprop="name">vue</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="webpack手动配置-vue项目构建"><a href="#webpack手动配置-vue项目构建" class="headerlink" title="webpack手动配置+vue项目构建"></a>webpack手动配置+vue项目构建</h3><h4 id="注意本文不涉及vue的具体使用方法，只用于记录vue项目的配置以及打包流程，用于理解vue的单文件系统的构建流程。以下将按照实际的配置步骤顺序进行记录。"><a href="#注意本文不涉及vue的具体使用方法，只用于记录vue项目的配置以及打包流程，用于理解vue的单文件系统的构建流程。以下将按照实际的配置步骤顺序进行记录。" class="headerlink" title="注意本文不涉及vue的具体使用方法，只用于记录vue项目的配置以及打包流程，用于理解vue的单文件系统的构建流程。以下将按照实际的配置步骤顺序进行记录。"></a>注意本文不涉及vue的具体使用方法，只用于记录vue项目的配置以及打包流程，用于理解vue的单文件系统的构建流程。以下将按照实际的配置步骤顺序进行记录。</h4><h4 id="1-npm初始化项目："><a href="#1-npm初始化项目：" class="headerlink" title="1.npm初始化项目："></a>1.npm初始化项目：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm init</div></pre></td></tr></table></figure>
+<p>此命令会自动创建package.json文件，且是未配置过的原始文件。</p>
+<h4 id="2-安装wepack，vue，vue-loader"><a href="#2-安装wepack，vue，vue-loader" class="headerlink" title="2.安装wepack，vue，vue-loader"></a>2.安装wepack，vue，vue-loader</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm i webpack vue vue-loader</div></pre></td></tr></table></figure>
+<p>安装结束后会出现warn，提示缺少css-loader和vue-template-compiler，所以接下来安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm i css-loader vue-template-compiler</div></pre></td></tr></table></figure></p>
+<h4 id="3-建立存放源码文件夹"><a href="#3-建立存放源码文件夹" class="headerlink" title="3.建立存放源码文件夹"></a>3.建立存放源码文件夹</h4><p>建立src文件夹，用于放置源码，并在src中创建app.vue文件，“.vue”文件可以理解为vue的一个单文件组件，里面可以包含template(html),script,style,并且.vue文件之间可以相互独立，也可以作为组件被import使用。</p>
+<h4 id="4-创建自定义的webpack的配置文件"><a href="#4-创建自定义的webpack的配置文件" class="headerlink" title="4.创建自定义的webpack的配置文件"></a>4.创建自定义的webpack的配置文件</h4><p>创建webpack.config.js，作为我们自己定义的webpack配置文件，来帮助我们来把前端资源进行打包，比如js，css，或者图片字体等等，在后面构建的时候会使用到。</p>
+<h4 id="5-创建index-js"><a href="#5-创建index-js" class="headerlink" title="5.创建index.js"></a>5.创建index.js</h4><p>在src下创建index.js作为项目的入口文件，该文件用于承载app.vue，既在dom中创建挂载app.vue的dom节点。</p>
+<h4 id="6-在package-json中创建打包脚本"><a href="#6-在package-json中创建打包脚本" class="headerlink" title="6.在package.json中创建打包脚本"></a>6.在package.json中创建打包脚本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;build&quot;:&quot;webpack --config webpack.config.js&quot;</div></pre></td></tr></table></figure>
+<p>表示build时webpack的配置文件使用webpack.config.js。<br><span style="color:red">此时运行npm run build，会在目录下成功创建dist目录，但是会报错，因为此刻我们没有为.vue文件配置相应的loader，可以理解为此时的webpack还无法解析vue文件,所以接下来在webpack.config.js中继续进行如下配置：</span><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">module:&#123;</div><div class="line">    rules:[</div><div class="line">      &#123;</div><div class="line">        test:/\.vue$/,</div><div class="line">        loader:&apos;vue-loader&apos;</div><div class="line">      &#125;</div><div class="line">    ]</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>可以发现rules为一个数组，在rules中配置的是所有的loader，后面还会有css-loader等等。<br>这时再运行npm run build，就会正常打包出dist文件夹，并在其中有一个bundle.js文件,打开bundle.js文件，发现bundle.js是由vue的源码和我们自己写的index.js共同组成，可以理解为webpack把vue源码和我们自己的js打包成了一个文件，在后面会把vue相关的代码单独提出来进行打包，毕竟我们自己的代码迭代的速度很快，vue源码会稳定很多，如果不单独提出来每次打包都会包括vue源码很不合算。</p>
+<h4 id="7-配置加载静态资源"><a href="#7-配置加载静态资源" class="headerlink" title="7.配置加载静态资源"></a>7.配置加载静态资源</h4><h5 id="1-css相关loader"><a href="#1-css相关loader" class="headerlink" title="(1)css相关loader"></a>(1)css相关loader</h5><p>在rules中接着写，由于此处会加载多个loader，所以使用use：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  test:/\.css$/,</div><div class="line">  use:[</div><div class="line">        &apos;style-loader&apos;,//把css写进html</div><div class="line">        &apos;css-loader&apos;,//从css文件中读出css内容</div><div class="line">        ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>本条配置的作用是，css会在html中以一段js的形式出现，该js的做用的是把css写入进html。</p>
+<h5 id="2-图片相关loader"><a href="#2-图片相关loader" class="headerlink" title="(2)图片相关loader"></a>(2)图片相关loader</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  test:/\.(gif|jpg|jpeg|png|svg)$/,</div><div class="line">  use:[</div><div class="line">        &#123;</div><div class="line">          loader:&apos;url-loader&apos;,</div><div class="line">          options:&#123; //把参数传至loader</div><div class="line">            limit:1024,</div><div class="line">              name:&apos;[name].[ext]&apos;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">      ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>此处使用对象形式来写因为loader可以配置相关的选项。<br>limit：因为url-loader可以把图片转成base64代码直接写在图片中，而不需要单独生成图片文件，此处设置limit是可以转成base64格式的图片的大小，此处是小于1024kb的都会被转成base64格式直接写进代码中。<br>name：输出的图片的文件名,name为输入的图片，ext为图片扩展名，也可以写成[name]-111.[ext],即名字可以随便写。  </p>
+<p>配置完成后安装相关的loader：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm i style-loader url-loader file-loader</div></pre></td></tr></table></figure></p>
+<p>虽然上文没有提及file-loader，但由于url-loader以来于file-loader，固此处一并进行安装。</p>
+<h4 id="7-安装css预处理器"><a href="#7-安装css预处理器" class="headerlink" title="7.安装css预处理器"></a>7.安装css预处理器</h4><p>此处以stylus为例：<br>配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  test:/\.styl/,</div><div class="line">  use:[</div><div class="line">       &apos;style-loader&apos;,</div><div class="line">       &apos;css-loader&apos;,</div><div class="line">       &apos;stylus-loader&apos;</div><div class="line">        ]</div><div class="line">&#125;,</div></pre></td></tr></table></figure></p>
+<p>安装loader：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm i stylus-loader stylus</div></pre></td></tr></table></figure></p>
+<p>同上，stylus-loader依赖stylus，所以此处一并安装stylus。<br>其他css预处理器less，sass也都同理。</p>
+<h4 id="8-webpack-dev-server配置和使用"><a href="#8-webpack-dev-server配置和使用" class="headerlink" title="8.webpack-dev-server配置和使用"></a>8.webpack-dev-server配置和使用</h4><p>(1)首先进行安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm i webpack-dev-server</div></pre></td></tr></table></figure></p>
+<p>(2)在package.json中添加如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;dev&quot;: &quot;webpack-dev-server --config webpack.config.js&quot;</div></pre></td></tr></table></figure></p>
+<p>(3)在webpack.config.js中进行配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">target:&apos;web&apos; //webapack的编译平台为web</div></pre></td></tr></table></figure></p>
+<p>(4)配置环境变量用以判断是测试环境还是生产环境，首先安装依赖包：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm i cross-env</div></pre></td></tr></table></figure></p>
+<p>(5)这个依赖包的作用是在配置环境变量时同一套配置在mac平台和windows平台下都能适用。</p>
+<p>(6)安装好后在package.json修改build和dev的配置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&quot;build&quot;: &quot;cross-env NODE_ENV=production webpack --config webpack.config.js&quot;,</div><div class="line">&quot;dev&quot;: &quot;ross-env NODE_ENV=development webpack-dev-server --config webpack.config.js&quot;</div></pre></td></tr></table></figure></p>
+<p>(7)在webpack.config.js中添加生产和测试环境的判断：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">const isDev=process.env.NODE_ENV===&apos;development&apos; //判断是生产环境还是测试环境，若是乎测试环境，isDev=true。</div></pre></td></tr></table></figure></p>
+<p>我们在package.json中配置的NODE_ENV=production或NODE_ENV=development都是存在于process变量中，所以才可以像上面那样判断。</p>
+<p>(8)在webpack.config.js中继续配置：  </p>
+<p>先把之前module.exports中的内容用一个常量config包裹,在代码结尾处再进行module.exports：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">const config=&#123;</div><div class="line">target:&apos;web&apos;,</div><div class="line">  entry:path.join(__dirname,&apos;src/index.js&apos;),</div><div class="line">  ...</div><div class="line">&#125;</div><div class="line"></div><div class="line">module.exports=config</div></pre></td></tr></table></figure></p>
+<p>(9)在module.exports之前添加对环境的判断：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">if(isDev)&#123;</div><div class="line">  config.devServer=&#123;</div><div class="line">    port:8000, //服务的端口</div><div class="line">    host:&apos;0.0.0.0&apos;, //如此配置可以满足localhsot或者127.0.0.1或者内网ip同时可以访问</div><div class="line">    overlay:&#123;</div><div class="line">      errors:true //webapck编译过程中的错误都直接显示在页面上</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>(10)添加承载index.js的html，别忘了所有的js都要承载在html中才能跑的起来：<br>安装依赖：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm i html-webpack-plugin</div></pre></td></tr></table></figure></p>
+<p>在webpack.config.js头部引入该插件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">const HTMLPlugin=require(&apos;html-webpack-plugin&apos;)</div></pre></td></tr></table></figure></p>
+<p>在webpack.config.js头部引入webpack：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">const webpack=require(&apos;webpack&apos;)</div></pre></td></tr></table></figure></p>
+<p>在config中添加plugins：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">plugins:[</div><div class="line">    new webpack.DefinePlugin(&#123;  //用于判断环境，并且在自己写的js中可以直接调用process.env这个变量</div><div class="line">      &apos;process.env&apos;:&#123;</div><div class="line">        NODE_ENV:isDev?&apos;&quot;development&quot;&apos;:&apos;&quot;production&quot;&apos; //此处注意单引号中要包含双引号，因为“development“和”production“是字符串儿不是变量</div><div class="line">      &#125;</div><div class="line">    &#125;),</div><div class="line">    new HTMLPlugin()</div><div class="line">  ]</div></pre></td></tr></table></figure></p>
+<p>现在运行 ‘npm run dev’，就可以运行项目了，浏览器访问<a href="http://localhost:8000/即可。至此，webpack-dev-server已经基本配置完成，终于可以跑个项目了～" target="_blank" rel="external">http://localhost:8000/即可。至此，webpack-dev-server已经基本配置完成，终于可以跑个项目了～</a></p>
+<p>最后还要添加几条：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hot:true</div></pre></td></tr></table></figure></p>
+<p>这条配置用于当页面有数据更新时不需要刷新整个页面，只刷新数据部分即可，就理解成热加载吧。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">config.plugins.push(</div><div class="line">    new webpack.HotModuleReplacementPlugin(),</div><div class="line">    new webpack.NoEmitOnErrorsPlugin()</div><div class="line">  )</div></pre></td></tr></table></figure>
+<p>这两条把热加载的插件添加进config中。</p>
+<p>配置下sourcemap，方便我们在浏览器中进行调试，不用直接面对编译过的代码了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">config.devtool=&apos;#cheap-module-eval-source-map&apos; //注意‘devtool’是全小写</div></pre></td></tr></table></figure></p>
+<h4 id="9-配置postcss"><a href="#9-配置postcss" class="headerlink" title="9.配置postcss"></a>9.配置postcss</h4><p>postcss可以帮助我们后处理一些css文件，比如说postcss的autoprefixer就可以帮我们添加浏览器前缀(-webkit-…):  </p>
+<p>先进行依赖包的安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm i postcss-loader autoprefixer babel-loader babel-core</div></pre></td></tr></table></figure></p>
+<p>在根目录下创建postcss.config.js,并配置如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">const autoprefixer=require(&apos;autoprefixer&apos;) //自动添加浏览器前缀</div><div class="line"></div><div class="line">module.exports=&#123;</div><div class="line">  plugins:[</div><div class="line">    autoprefixer()</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在webpack.config.js中对styl增加一个loader,增加完配置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">   test: /\.styl/,</div><div class="line">   use: [</div><div class="line">         &apos;style-loader&apos;,</div><div class="line">         &apos;css-loader&apos;,</div><div class="line">         &#123;</div><div class="line">           loader:&apos;postcss-loader&apos;,</div><div class="line">           options:&#123;</div><div class="line">             sourceMap:true //使用下方的stylus-loader生成的sourceMap</div><div class="line">           &#125;</div><div class="line">         &#125;,</div><div class="line">         &apos;stylus-loader&apos;</div><div class="line">       ]</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h4 id="10-配置-babelrc"><a href="#10-配置-babelrc" class="headerlink" title="10.配置.babelrc"></a>10.配置.babelrc</h4><p>babelrc用于写vue的render方法，同时使vue支持jsx写法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;presets&quot;: [</div><div class="line">    &quot;env&quot;</div><div class="line">  ],</div><div class="line">  &quot;plugins&quot;:[</div><div class="line">    &quot;transform-vue-jsx&quot;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>类库安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm i babel-preset-env babel-plugin-transform-vue-jsx</div></pre></td></tr></table></figure></p>
+<p>提示warn需要babel-helper-vue-jsx-merge-props，继续安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm i babel-helper-vue-jsx-merge-props babel-plugin-syntax-jsx</div></pre></td></tr></table></figure></p>
+<h4 id="11-webpack配置css的单独分离打包"><a href="#11-webpack配置css的单独分离打包" class="headerlink" title="11.webpack配置css的单独分离打包"></a>11.webpack配置css的单独分离打包</h4><p>此时进行生产环境的打包时(npm run build),css仍然是写在bundle.js中，我们线上实际需要的是css与js等文件分离出来单独打包。具体如下：</p>
+<p>首先安装插件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm i extract-text-webpack-plugin</div></pre></td></tr></table></figure></p>
+<p>安装完成后在webpack.config.js头部进行extract-text-webpack-plugin的引入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">const ExtractPlugin=require(&apos;extract-text-webpack-plugin&apos;)</div></pre></td></tr></table></figure></p>
+<p>该插件的作用是把非js代码的文件打包成单独的文件。<br>安装完插件后需要修改webpack.config.js的配置，css预处理相关的配置需要单独写在测试环境的配置下，此处以stylus为例进行配置,less\sass同理，所以之前写好的styl的配置需移动到isDev之下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">if (isDev) &#123;</div><div class="line">  config.module.rules.push(</div><div class="line">    &#123;</div><div class="line">      test: /\.styl/,</div><div class="line">      use: [</div><div class="line">        &apos;style-loader&apos;,</div><div class="line">        &apos;css-loader&apos;,</div><div class="line">        &#123;</div><div class="line">          loader:&apos;postcss-loader&apos;,</div><div class="line">          options:&#123;</div><div class="line">            sourceMap:true //使用下方的stylus-loader生成的sourceMap</div><div class="line">          &#125;</div><div class="line">        &#125;,</div><div class="line">        &apos;stylus-loader&apos;</div><div class="line">      ]</div><div class="line">    &#125;</div><div class="line">  )</div><div class="line">  config.devtool=&apos;#cheap-module-eval-source-map&apos;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然后生产环境的配置写在else中，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">config.module.rules.push(</div><div class="line">    &#123;</div><div class="line">      test: /\.styl/,</div><div class="line">      use: ExtractPlugin.extract(&#123;</div><div class="line">        fallback:&quot;style-loader&quot;, //style-loader是把css-loader处理出来的内容外面包了一层js，这个js的作用就是把这个css写进html里面去</div><div class="line">        use:[</div><div class="line">          &apos;css-loader&apos;,</div><div class="line">          &#123;</div><div class="line">            loader:&apos;postcss-loader&apos;,</div><div class="line">            options:&#123;</div><div class="line">              sourceMap:true</div><div class="line">            &#125;</div><div class="line">          &#125;,</div><div class="line">          &apos;stylus-loader&apos;</div><div class="line">        ]</div><div class="line">      &#125;)</div><div class="line">    &#125;</div><div class="line">  )</div><div class="line"></div><div class="line">  config.plugins.push(</div><div class="line">    new ExtractPlugin(&apos;style.[contentHash:8].css&apos;) //指定输出的静态文件的名字,contentHash会根据css的内容进行hash得到一个单独的值</div><div class="line">  )</div></pre></td></tr></table></figure>
+<p>打包出来的filename在生产环境下要用chunkhash，测试环境下可以默认使用hash即可，所以生产环境下要单独配置一下filename：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">else&#123;</div><div class="line">config.output.filename=&apos;[name].[chunkhash:8].js&apos;</div><div class="line">config.module.rules.push(</div><div class="line">  ...</div><div class="line">)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>此时再进行npm run build，则在dist就会产生带有hash的打包出的文件，且css也是一个被单独打包出来的文件，然而此处要注意，写在vue文件中的样式没有被打包出来，原因是这个vue-loader的一个设定，它会在组件要显示的时候才会把相关样式显示出来，即只有在该vue被使用时相关的样式才会被使用，这样做的好处是组件异步加载时样式也会异步加载。</p>
+<h4 id="12-vue类库代码和业务代码的拆分"><a href="#12-vue类库代码和业务代码的拆分" class="headerlink" title="12.vue类库代码和业务代码的拆分"></a>12.vue类库代码和业务代码的拆分</h4><p>之所以要进行vue代码和业务代码拆分是因为类库的代码稳定性要相对较高，而业务的代码则会快速的迭代，如果不拆分每次稳定的类库代码和业务代码都会被一起打包出来，类库代码也没法做到在浏览器中长久的缓存，这样不仅会使用户的加载速度变慢同时也会耗费没有必要的服务器流量。  </p>
+<p>具体操作如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">else&#123;</div><div class="line">  config.entry=&#123;</div><div class="line">    app:path.join(__dirname, &apos;src/index.js&apos;),</div><div class="line">    vendor:[&apos;vue&apos;] //此处因为现在只使用了vue，如果日后使用了vue-router也可以在后面接着写vue-router</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然后在生产环境的plugin中增加如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">new webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">  name:&apos;vendor&apos; //这里的名字要和上面else中vendor名字一致，否则识别不了</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>这时再进行npm run build，就会打包出来vendor.xxxx.js文件，里面包含的就是vue的类库代码，然后app.js的大小也会相应的变小。</p>
+<h4 id="13-把webpack相关的代码单独打包到一个单独的文件中"><a href="#13-把webpack相关的代码单独打包到一个单独的文件中" class="headerlink" title="13.把webpack相关的代码单独打包到一个单独的文件中"></a>13.把webpack相关的代码单独打包到一个单独的文件中</h4><p>在config.plugins.push中添加如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">config.plugins.push(</div><div class="line">  ...</div><div class="line">  new webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">    name:&apos;vendor&apos; //这里的名字要和上面else中vendor名字一致，否则识别不了</div><div class="line">  &#125;),</div><div class="line">    //这里注意：vendor一定要放在runtime的前面</div><div class="line">  new webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">    name:&apos;runtime&apos; //把写在js中的webpack的代码打包到单独的文件中</div><div class="line">  &#125;)</div><div class="line">)</div></pre></td></tr></table></figure></p>
+<p>现在再运行npm run build就会把webpack的代码打包到runtime.xxx.js中，webpack代码分离完毕。</p>
+<h4 id="至此，一次基本的webpack-vue的配置已经完成了。如果不想使用vue-cli大礼包，webpack基本的一些配置好是要了解一些的。"><a href="#至此，一次基本的webpack-vue的配置已经完成了。如果不想使用vue-cli大礼包，webpack基本的一些配置好是要了解一些的。" class="headerlink" title="至此，一次基本的webpack+vue的配置已经完成了。如果不想使用vue-cli大礼包，webpack基本的一些配置好是要了解一些的。"></a>至此，一次基本的webpack+vue的配置已经完成了。如果不想使用vue-cli大礼包，webpack基本的一些配置好是要了解一些的。</h4><h4 id="最后，生产环境下上传文件只需把dist文件夹下的内容上传至服务器即可。"><a href="#最后，生产环境下上传文件只需把dist文件夹下的内容上传至服务器即可。" class="headerlink" title="最后，生产环境下上传文件只需把dist文件夹下的内容上传至服务器即可。"></a>最后，生产环境下上传文件只需把dist文件夹下的内容上传至服务器即可。</h4>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/08/微信中自动播放音乐/" rel="next" title="微信中自动播放音乐">
+                <i class="fa fa-chevron-left"></i> 微信中自动播放音乐
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/24/flex布局语法全记录/" rel="prev" title="flex布局语法全记录">
+                flex布局语法全记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/avatar.jpg"
+              alt="xuejian" />
+          
+            <p class="site-author-name" itemprop="name">xuejian</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack手动配置-vue项目构建"><span class="nav-number">1.</span> <span class="nav-text">webpack手动配置+vue项目构建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注意本文不涉及vue的具体使用方法，只用于记录vue项目的配置以及打包流程，用于理解vue的单文件系统的构建流程。以下将按照实际的配置步骤顺序进行记录。"><span class="nav-number">1.1.</span> <span class="nav-text">注意本文不涉及vue的具体使用方法，只用于记录vue项目的配置以及打包流程，用于理解vue的单文件系统的构建流程。以下将按照实际的配置步骤顺序进行记录。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-npm初始化项目："><span class="nav-number">1.2.</span> <span class="nav-text">1.npm初始化项目：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-安装wepack，vue，vue-loader"><span class="nav-number">1.3.</span> <span class="nav-text">2.安装wepack，vue，vue-loader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-建立存放源码文件夹"><span class="nav-number">1.4.</span> <span class="nav-text">3.建立存放源码文件夹</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-创建自定义的webpack的配置文件"><span class="nav-number">1.5.</span> <span class="nav-text">4.创建自定义的webpack的配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-创建index-js"><span class="nav-number">1.6.</span> <span class="nav-text">5.创建index.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-在package-json中创建打包脚本"><span class="nav-number">1.7.</span> <span class="nav-text">6.在package.json中创建打包脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-配置加载静态资源"><span class="nav-number">1.8.</span> <span class="nav-text">7.配置加载静态资源</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-css相关loader"><span class="nav-number">1.8.1.</span> <span class="nav-text">(1)css相关loader</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-图片相关loader"><span class="nav-number">1.8.2.</span> <span class="nav-text">(2)图片相关loader</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-安装css预处理器"><span class="nav-number">1.9.</span> <span class="nav-text">7.安装css预处理器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-webpack-dev-server配置和使用"><span class="nav-number">1.10.</span> <span class="nav-text">8.webpack-dev-server配置和使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-配置postcss"><span class="nav-number">1.11.</span> <span class="nav-text">9.配置postcss</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-配置-babelrc"><span class="nav-number">1.12.</span> <span class="nav-text">10.配置.babelrc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-webpack配置css的单独分离打包"><span class="nav-number">1.13.</span> <span class="nav-text">11.webpack配置css的单独分离打包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-vue类库代码和业务代码的拆分"><span class="nav-number">1.14.</span> <span class="nav-text">12.vue类库代码和业务代码的拆分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-把webpack相关的代码单独打包到一个单独的文件中"><span class="nav-number">1.15.</span> <span class="nav-text">13.把webpack相关的代码单独打包到一个单独的文件中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#至此，一次基本的webpack-vue的配置已经完成了。如果不想使用vue-cli大礼包，webpack基本的一些配置好是要了解一些的。"><span class="nav-number">1.16.</span> <span class="nav-text">至此，一次基本的webpack+vue的配置已经完成了。如果不想使用vue-cli大礼包，webpack基本的一些配置好是要了解一些的。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最后，生产环境下上传文件只需把dist文件夹下的内容上传至服务器即可。"><span class="nav-number">1.17.</span> <span class="nav-text">最后，生产环境下上传文件只需把dist文件夹下的内容上传至服务器即可。</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xuejian</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">个人专属</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">博客 &mdash; <a class="theme-link" href="http://blog.hanxuejian.com">blog</a> </div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

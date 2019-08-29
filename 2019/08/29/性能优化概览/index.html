@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="y8VbfmqVeG" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="性能优化," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="性能优化首先先说一道经典到不能再经典的面试题： 从输入URL到页面加载完成，发生了什么？1.用户输入www.baidu.com; 2.浏览器通过DNS，把URL解析为IP； 3.和IP地址建立TCP链接，发送HTTP请求； 4.服务器接受请求，查库，读文件等，拼接好返回的HTTP响应返回给浏览器； 5.浏览器收到首屏html，开始渲染； 6.解析html为dom树； 7.解析css为css-tre">
+<meta name="keywords" content="性能优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="性能优化概览">
+<meta property="og:url" content="http://yoursite.com/2019/08/29/性能优化概览/index.html">
+<meta property="og:site_name" content="积跬步，至千里">
+<meta property="og:description" content="性能优化首先先说一道经典到不能再经典的面试题： 从输入URL到页面加载完成，发生了什么？1.用户输入www.baidu.com; 2.浏览器通过DNS，把URL解析为IP； 3.和IP地址建立TCP链接，发送HTTP请求； 4.服务器接受请求，查库，读文件等，拼接好返回的HTTP响应返回给浏览器； 5.浏览器收到首屏html，开始渲染； 6.解析html为dom树； 7.解析css为css-tre">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-29T03:05:28.746Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="性能优化概览">
+<meta name="twitter:description" content="性能优化首先先说一道经典到不能再经典的面试题： 从输入URL到页面加载完成，发生了什么？1.用户输入www.baidu.com; 2.浏览器通过DNS，把URL解析为IP； 3.和IP地址建立TCP链接，发送HTTP请求； 4.服务器接受请求，查库，读文件等，拼接好返回的HTTP响应返回给浏览器； 5.浏览器收到首屏html，开始渲染； 6.解析html为dom树； 7.解析css为css-tre">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/29/性能优化概览/"/>
+
+
+
+
+
+  <title>性能优化概览 | 积跬步，至千里</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?aa1014056bbec3cd65fcc78d542465c8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">积跬步，至千里</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/29/性能优化概览/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xuejian">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="积跬步，至千里">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">性能优化概览</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-29T10:34:02+08:00">
+                2019-08-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/性能优化/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h1><p>首先先说一道经典到不能再经典的面试题：</p>
+<h4 id="从输入URL到页面加载完成，发生了什么？"><a href="#从输入URL到页面加载完成，发生了什么？" class="headerlink" title="从输入URL到页面加载完成，发生了什么？"></a>从输入URL到页面加载完成，发生了什么？</h4><p>1.用户输入www.baidu.com;</p>
+<p>2.浏览器通过DNS，把URL解析为IP；</p>
+<p>3.和IP地址建立TCP链接，发送HTTP请求；</p>
+<p>4.服务器接受请求，查库，读文件等，拼接好返回的HTTP响应返回给浏览器；</p>
+<p>5.浏览器收到首屏html，开始渲染；</p>
+<p>6.解析html为dom树；</p>
+<p>7.解析css为css-tree；</p>
+<p>8.dom+css生成render-tree绘图；</p>
+<p>9.加载script的js文件；</p>
+<p>10.执行js。</p>
+<p>性能优化的结果就是上面的步骤加在一起后，所花费的时间尽可能的短，所以基本有两大优化的方向：</p>
+<p>1.少加载文件；</p>
+<p>2.少执行代码。</p>
+<p>此处推荐文章：《how browser works》:<a href="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/" target="_blank" rel="external">https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/</a></p>
+<p>逐步解析上面提到的步骤：</p>
+<h4 id="DNS"><a href="#DNS" class="headerlink" title="DNS:"></a>DNS:</h4><p>1.查看dns缓存；</p>
+<p>2.本地没缓存。发起dns请求，向本地配置的dns服务器发起请求（递归）</p>
+<p>优化：prefetch预获取，比如使用了cdn的域名。</p>
+<p>dns方面前端能做的比较少，基本上就是用prefetch预获取后面会用到的dns。</p>
+<p>例如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;link rel="dns-prefetch" href="//g.alicdn.com"/&gt;</div></pre></td></tr></table></figure>
+<p>本例是写在meta中，是当前的页面中可能使用的外链，不管是静态文件还是图片，在加载首页的时候会把这些dns标签给加载出来了，使这些域名在还没有用到的时候浏览器就把这些dns的解析接口给拿到了，这样在用到这些域名的时候就不需要再去查找，本地就有cdn的缓存了。这件事在首页加载之后浏览器自动就做了。</p>
+<h4 id="TCP-IP："><a href="#TCP-IP：" class="headerlink" title="TCP/IP："></a>TCP/IP：</h4><p>Ip,tcp,udp,http,ftp,ssh,https,dns协议。</p>
+<p><strong>IP</strong>:从软件角度来看，ip协议就是最底层的协议。负责寻址，在互联网中找到目标机器，只管寻址，不管数据传输。</p>
+<p><strong>TCP</strong>：在ip层级之上有<strong>TCP</strong>,    <strong>负责数据的完整和有序</strong>，（三次握手）如果出了丢包有重发的机制。和TCP处于一层的还有<strong>UDP</strong>协议，<strong>只管发数据不管别的</strong>。主要用于语音视频聊天，游戏。和TCP相比，UDP更快，因为无验证，无重发，并且使用场景下有少量的丢包也无所谓。</p>
+<p><strong>HTTP：</strong>在<strong>tcp</strong>之上还有<strong>htt</strong>p协议，是基于tcp的协议。负责应用层的各种逻辑，比如缓存，cookie，数据格式等。</p>
+<h4 id="基于以上给出的优化策略："><a href="#基于以上给出的优化策略：" class="headerlink" title="基于以上给出的优化策略："></a>基于以上给出的优化策略：</h4><p>1.文件体积：（此处图片的体积是有很大的优化空间的）</p>
+<p>​    1.js打包压缩，css压缩‘</p>
+<p>​    2.图片压缩，雪碧图，png,jpg,gif。色彩丰富的小图用png，大图（头图）用jpg.</p>
+<p>​    3.gzip</p>
+<p>​    4.针对小图，用svg是体积最小的，svg是矢量图，虽然渲染时会占用一点计算量，但对现代cpu无压力。</p>
+<p>​    5.雪碧图的问题是更新起来很麻烦，当雪碧图中某个小图标更新时会导致整张雪碧图都重新加载，反而性能没有       那么好。</p>
+<p><strong>这两条的目的都是为了较少文件体积，减少文件请求次数</strong>。</p>
+<p>2.减少文件请求次数：</p>
+<ol>
+<li>文件打包(webpack层面)；</li>
+<li>缓存(http缓存)，数据缓存（频繁使用的数据应该放在内存中而不是放在硬盘中，内存是计算性能最高的，任何读取数据的持久化的都会比较慢，所以有了后端的session，存在redis中）；</li>
+<li>懒加载（webpack中的import和require）；</li>
+</ol>
+<p>3.减少用户和服务器之间的距离</p>
+<ol>
+<li>使用cdn（分发网络）。</li>
+</ol>
+<h4 id="HTTP缓存（重点）"><a href="#HTTP缓存（重点）" class="headerlink" title="HTTP缓存（重点）"></a>HTTP缓存（重点）</h4><p>请求：</p>
+<p>GET/index.js http/1.1</p>
+<p>协议头：值</p>
+<p>协议头：值</p>
+<p>等等多个协议头</p>
+<ol>
+<li><p>浏览器：例如获取index.js</p>
+</li>
+<li><p>服务端：给你文件</p>
+<ol>
+<li><p>expires过期时间：比如jquery或者vue.js这种很长时间都不过期的文件，不需要每次请求的时候都问服务器要，在expires的过期时间之前都不需要重新问服务器要。</p>
+</li>
+<li><p>Catche-control：max-age=时间戳 表示在这些时间之内不过期</p>
+</li>
+<li><p>结合上面两点，浏览器在首次获取index.js文件的时候会先缓存起来，再次获取index.js文件时候会先查一下这个文件之前有没有获取过（有没有缓存），再看是否还在过期时间内，如果还没过期，就直接返回200 from memory catch（命中缓存，从缓存中拿到的）,这种是没有网络请求的，都走缓存，整个请求都不发出。（此处优化的效果会很明显）；<strong>这个叫强缓存</strong>。</p>
+</li>
+<li><p>如果已经过期了，浏览器也不会直接加载，而是问一下后端，这个文件有没有过期，怎么问呢？通过下面的响应头来问：</p>
+<ol>
+<li><p>If-modified-since:日期   在这个日期之后有没有修改过文件，此处的日期指的是浏览器上次获取index.js时的日期，（此次虽然有了和服务器的请求，但是却只有协议头的交互），如果没有改过，服务端会告诉浏览器没改过，用缓存的吧，然后浏览器就会用缓存的index.js，这种响应会返回304 用缓存。</p>
+</li>
+<li><p>Etag: 文件指纹，告诉浏览器文件内容有没有改过，返回304。比If-modified-since优先级更高，If-modified-since有一个问题就是有可能是日期修改了，但是里面的内容没变，比如日志文件。</p>
+<p><strong>这个叫协商缓存</strong>。</p>
+</li>
+</ol>
+<p>5.以上都不行，只能重新加载。</p>
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="从以上几点有什么收获呢？"><a href="#从以上几点有什么收获呢？" class="headerlink" title="从以上几点有什么收获呢？"></a>从以上几点有什么收获呢？</h4><p>1.大公司如何上线前端代码（百度）：</p>
+<ol>
+<li><p>普通上线，直接替换文件有什么问题？</p>
+<p>上线后，用户的缓存问题。比如expires设置的时间过长，会导致用户页不更新，还在用缓存。</p>
+</li>
+<li><p>具体怎么上线，如下：</p>
+<ol>
+<li><p>方案一：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script src=<span class="string">"xxx.js?_v=1.0.1"</span>&gt;</div></pre></td></tr></table></figure>
+<p>这种是在文件后面打上版本号或者时间戳，如果版本号/时间戳不变，则整个上线这个文件就不会变，这个v是后端打进来的一个变量，不用我们手动改，每次发布都会跟着版本号变。<strong>这样带来的问题就是：</strong>比如某次发版，只改了css，js完全没有修改，但是本次的版本号变了，也会导致js的版本号变，导致js也重新加载，导致了加载的冗余。</p>
+</li>
+<li><p>方案二：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script src=<span class="string">"xxx.js?_v=文件的哈希值"</span>&gt;</div></pre></td></tr></table></figure>
+<p>哈希值基本就是md5，基本能解决冗余问题，因为如果文件内容不变，文件的哈希就会一直不变，所以缓存就会一直生效。哈希值的获取方法就是借助工程化：webpack或者fis。这种方法基本解决了缓存问题，但是带来了另外的三个问题：</p>
+<ol>
+<li><p>html和js的上线先后顺序，</p>
+</li>
+<li><p>怎么回滚；</p>
+</li>
+<li><p>cdn缓存。</p>
+<p>html先上线，导致加载的是旧的js，会报错，如果先上线js导致加载的是老的dom用的是新的js，为了解决以上问题有以下方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script src=<span class="string">"xxx.文件的哈希值.js"</span>&gt;</div></pre></td></tr></table></figure>
+<p>先上线js后上线html，而且由于哈希值变了，新的js不会覆盖老文件，这样就可以保证html上线完后访问的js也是新的。而且也可以解决方案一中的cdn的缓存不会因为?_v=1.0.1变化而更新，这就导致</p>
+<p>方案一的cdn不会刷新，采用方案二相当于是新文件，文件变了，cdn缓存也刷新了，就不会有这种问题。这种方法唯一的问题就是定期删除一下旧的js文件就行了，实际成本并不高。</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p>总结：现在的缓存方案为：</p>
+<ol>
+<li>html永不缓存(因为html是项目的入口，每次访问html都必须是新文件)；</li>
+<li>js长期缓存，前端通过文件名来控制缓存；</li>
+</ol>
+<h4 id="webpack包分析工具：webpack-bundle-analyzer"><a href="#webpack包分析工具：webpack-bundle-analyzer" class="headerlink" title="webpack包分析工具：webpack-bundle-analyzer"></a>webpack包分析工具：webpack-bundle-analyzer</h4><h4 id="服务端渲染-SSR"><a href="#服务端渲染-SSR" class="headerlink" title="服务端渲染(SSR)"></a>服务端渲染(SSR)</h4><p>现在vue或者react打包出来的入口文件index.html基本是空的，基本只有加载的几个js，所以首屏加载出来后会出现白屏，需要先js加载完毕，js加载完毕后还需要等js执行完毕之后首页才会出现内容，所以整体来说肯定会慢一些。所以所谓服务端渲染就是在首屏的时候把dom节点都渲染出来，这样在js加载完成前就有html，css，首屏会展现出来，等js加载完成后就有交互了，会快很多。</p>
+<h4 id="代码执行层面"><a href="#代码执行层面" class="headerlink" title="代码执行层面"></a>代码执行层面</h4><h5 id="1-雅虎军规"><a href="#1-雅虎军规" class="headerlink" title="1.雅虎军规"></a>1.雅虎军规</h5><h5 id="2-性能监控-Performace"><a href="#2-性能监控-Performace" class="headerlink" title="2.性能监控 Performace"></a>2.性能监控 Performace</h5><p>​    (1)控制台中输入：performance.getEntriesByType(‘navigation’)，</p>
+<p>​    其中domainLookupStart和domainLookupEnd的时间差就是dns的寻找时间。 </p>
+<p>​    (2)chrome浏览器自带的performace功能</p>
+<h5 id="3-节流-throttle"><a href="#3-节流-throttle" class="headerlink" title="3.节流(throttle)"></a>3.节流(throttle)</h5><p>​    节流是指每隔固定的时间发出一次请求。</p>
+<h5 id="4-防抖-debounce"><a href="#4-防抖-debounce" class="headerlink" title="4.防抖(debounce)"></a>4.防抖(debounce)</h5><p>​    防抖是指最后统一发一次请求，比如：有一个函数，监听了页面的滑动，不做防抖时每滑动一次，这个函数会执行好多次，如果这个函数每次都在发送网络请求，则页面就会直接卡死了。防抖就是统一一下，在某个时机下统一发出请求</p>
+<h5 id="5-回流-重排"><a href="#5-回流-重排" class="headerlink" title="5.回流(重排)"></a>5.回流(重排)</h5><p>​    当我们对DOM的修改引发了DOM几何尺寸的变化(比如修改元素的宽，高或隐藏元素等)时，浏览器需要重新计算元素的几何属性(其他元素的几何属性和位置也会因此受到影响)，然后再将计算的结果绘制出来。这个过程就是回流(也叫重排)</p>
+<h5 id="6-重绘"><a href="#6-重绘" class="headerlink" title="6.重绘"></a>6.重绘</h5><p>​     当我们对DOM的修改导致了样式的变化、却并未影响其几何属性(比如修改了颜色或背景色)时，浏览器不需要重新计算元素的几何属性、直接为该元素绘制新的样式(跳过了上图所示的回流环节)。这个过程叫做重绘。</p>
+<h5 id="由此我们可以看出，重绘不一定导致回流，回流一定会导致重绘。"><a href="#由此我们可以看出，重绘不一定导致回流，回流一定会导致重绘。" class="headerlink" title="由此我们可以看出，重绘不一定导致回流，回流一定会导致重绘。"></a>由此我们可以看出，重绘不一定导致回流，回流一定会导致重绘。</h5><h5 id="回流是影响最大的："><a href="#回流是影响最大的：" class="headerlink" title="回流是影响最大的："></a>回流是影响最大的：</h5><ol>
+<li>窗体，字体大小；</li>
+<li>增加样式表；</li>
+<li>内容变化；</li>
+<li>class属性；</li>
+<li>offsetWidth和offsetHeight;</li>
+<li>fixed；</li>
+</ol>
+<h5 id="7-lazy-load"><a href="#7-lazy-load" class="headerlink" title="7.lazy-load"></a>7.lazy-load</h5><p>​    原理：页面滑动到需要展示的位置时再加载对应的图片，不要在加载的时候把图片都加载完。</p>
+<h5 id="8-数据冻结"><a href="#8-数据冻结" class="headerlink" title="8.数据冻结"></a>8.数据冻结</h5><p>​    不是所有数据都要放在响应式中，任何不在模版里渲染的数据都不应该放在data中，要不就用Object.freeze()（vue中，react同理）把它冻住，要不就使用this.xxx来存储就可以了(在mounted的时候直接挂载在this之上就可以了)。</p>
+<h5 id="9-长列表，使用虚拟列表，比如react-virtualized"><a href="#9-长列表，使用虚拟列表，比如react-virtualized" class="headerlink" title="9.长列表，使用虚拟列表，比如react-virtualized"></a>9.长列表，使用虚拟列表，比如react-virtualized</h5><p>本条尤其适用移动端的长列表，核心原理就是加载一些数据的同时删一些数据，新老dom节点进行替换。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/性能优化/" rel="tag"># 性能优化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/26/记录一个卡牌的旋转效果/" rel="next" title="记录一个卡牌的旋转效果">
+                <i class="fa fa-chevron-left"></i> 记录一个卡牌的旋转效果
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/avatar.jpg"
+              alt="xuejian" />
+          
+            <p class="site-author-name" itemprop="name">xuejian</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#性能优化"><span class="nav-number">1.</span> <span class="nav-text">性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#从输入URL到页面加载完成，发生了什么？"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">从输入URL到页面加载完成，发生了什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">DNS:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP-IP："><span class="nav-number">1.0.0.3.</span> <span class="nav-text">TCP/IP：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于以上给出的优化策略："><span class="nav-number">1.0.0.4.</span> <span class="nav-text">基于以上给出的优化策略：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP缓存（重点）"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">HTTP缓存（重点）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从以上几点有什么收获呢？"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">从以上几点有什么收获呢？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#webpack包分析工具：webpack-bundle-analyzer"><span class="nav-number">1.0.0.7.</span> <span class="nav-text">webpack包分析工具：webpack-bundle-analyzer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务端渲染-SSR"><span class="nav-number">1.0.0.8.</span> <span class="nav-text">服务端渲染(SSR)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码执行层面"><span class="nav-number">1.0.0.9.</span> <span class="nav-text">代码执行层面</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-雅虎军规"><span class="nav-number">1.0.0.9.1.</span> <span class="nav-text">1.雅虎军规</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-性能监控-Performace"><span class="nav-number">1.0.0.9.2.</span> <span class="nav-text">2.性能监控 Performace</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-节流-throttle"><span class="nav-number">1.0.0.9.3.</span> <span class="nav-text">3.节流(throttle)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-防抖-debounce"><span class="nav-number">1.0.0.9.4.</span> <span class="nav-text">4.防抖(debounce)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-回流-重排"><span class="nav-number">1.0.0.9.5.</span> <span class="nav-text">5.回流(重排)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-重绘"><span class="nav-number">1.0.0.9.6.</span> <span class="nav-text">6.重绘</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#由此我们可以看出，重绘不一定导致回流，回流一定会导致重绘。"><span class="nav-number">1.0.0.9.7.</span> <span class="nav-text">由此我们可以看出，重绘不一定导致回流，回流一定会导致重绘。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#回流是影响最大的："><span class="nav-number">1.0.0.9.8.</span> <span class="nav-text">回流是影响最大的：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-lazy-load"><span class="nav-number">1.0.0.9.9.</span> <span class="nav-text">7.lazy-load</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-数据冻结"><span class="nav-number">1.0.0.9.10.</span> <span class="nav-text">8.数据冻结</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-长列表，使用虚拟列表，比如react-virtualized"><span class="nav-number">1.0.0.9.11.</span> <span class="nav-text">9.长列表，使用虚拟列表，比如react-virtualized</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xuejian</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">个人专属</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">博客 &mdash; <a class="theme-link" href="http://blog.hanxuejian.com">blog</a> </div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
